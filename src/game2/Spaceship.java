@@ -41,11 +41,13 @@ public class Spaceship implements Ship{
     boolean winCase; 
     
     Spaceship(int screenWidth, int screenHeight){
-        position = new Posn(screenWidth/2, screenHeight - 10);
-        red = 5;
-        blue = 5;
-        yellow = 5;
-        winCase = true; 
+        this.position = new Posn(screenWidth/2, screenHeight - 10);
+        this.red = 5;
+        this.blue = 5;
+        this.yellow = 5;
+        this.winCase = true; 
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
     }
     
     Spaceship(Posn position, int red, int blue, int yellow, boolean winCase,
@@ -92,7 +94,12 @@ public class Spaceship implements Ship{
     }    
     
     
-    //testing
+    
+    
+    
+    
+    
+    //Testing Code
     static int checkOnKey = 0;
     static Random rand = new Random();
     
@@ -107,7 +114,7 @@ public class Spaceship implements Ship{
         for (int i = 0; i < 1000; i++) {
             int randInt = randInt(2);
             
-            if (i == 1) {
+            if (randInt == 1) {
                 myShip2 = myShip2.onKey("right");
             } else {
                 myShip2 = myShip2.onKey("left");
@@ -119,8 +126,8 @@ public class Spaceship implements Ship{
             if (myShip2.position.x > myShip2.screenWidth - myShip2.shipWidth/2){
                 throw new Exception("This ship has gone off the right bound");
             }
+            checkOnKey++;
         }
-       checkOnKey++;
     }
     
     public static void main(String[] args) throws Exception {

@@ -19,9 +19,5 @@ import javalib.worldimages.*;
 public interface Ship {
     public Ship onTick();
     public Ship onKey(String key);
-    public Posn positionHuh();
-    public int shipWidthHuh();
-    public int shipHeightHuh();
-    public int screenWidth();
-    public int screenHeight();
+    
 }
