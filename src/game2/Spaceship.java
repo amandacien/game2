@@ -93,7 +93,7 @@ public class Spaceship implements Ship{
     
     
     //testing
-    int checkOnKey = 0;
+    static int checkOnKey = 0;
     static Random rand = new Random();
     
     //returns a random int from 1 to x
@@ -101,24 +101,37 @@ public class Spaceship implements Ship{
         return rand.nextInt(x) + 1 ;
     }
     
-    private void checkOnKey(Spaceship myShip) throws Exception {
-        Spaceship myShip2 = myShip;
+    private void checkOnKey() throws Exception {
+        Spaceship myShip2 = this;
         
         for (int i = 0; i < 1000; i++) {
+            int randInt = randInt(2);
             
+            if (i == 1) {
+                myShip2 = myShip2.onKey("right");
+            } else {
+                myShip2 = myShip2.onKey("left");
+            }
+            
+            if (myShip2.position.x < myShip2.shipWidth/2) {
+                throw new Exception("The ship has gone off the left bound");
+            }
+            if (myShip2.position.x > myShip2.screenWidth - myShip2.shipWidth/2){
+                throw new Exception("This ship has gone off the right bound");
+            }
         }
-       
+       checkOnKey++;
     }
     
-    private void testOnKey(String k) {
-        this.onKey(k).checkOutOfBounds();
+    public static void main(String[] args) throws Exception {
+        Spaceship t1 = new Spaceship(300, 600);
+        
+        t1.checkOnKey();
+        
+        System.out.println(checkOnKey);
+        
     }
     
-    public static void main(String[] args) {
-        Spaceship t1 = new Spaceship();
-        t1.testOnKey("left");
-    }
-    }
     
      
 }
