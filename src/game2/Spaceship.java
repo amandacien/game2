@@ -101,6 +101,7 @@ public class Spaceship implements Ship{
     
     //Testing Code
     static int checkOnKey = 0;
+    static int checkMoveShip = 0;
     static Random rand = new Random();
     
     //returns a random int from 1 to x
@@ -109,6 +110,7 @@ public class Spaceship implements Ship{
     }
     
     private void checkOnKey() throws Exception {
+        
         Spaceship myShip2 = this;
         
         for (int i = 0; i < 1000; i++) {
@@ -126,16 +128,70 @@ public class Spaceship implements Ship{
             if (myShip2.position.x > myShip2.screenWidth - myShip2.shipWidth/2){
                 throw new Exception("This ship has gone off the right bound");
             }
+            
             checkOnKey++;
         }
     }
+    
+    
+    private void checkMoveShip() throws Exception {
+        Spaceship myShip1 = this;
+        Spaceship myShip2 = myShip1;
+        
+        for (int i = 0; i < 1000; i++) {
+            int randInt = randInt(2);
+            
+            if (randInt == 1) {
+                myShip2 = myShip2.onKey("right");
+            } else {
+                myShip2 = myShip2.onKey("left");
+            }
+            
+            System.out.println(myShip1.position.x + ", " + myShip2.position.x);
+            
+            if(randInt == 2){
+                if (myShip1.position.x < myShip1.shipWidth/2 + myShip1.moveShip) {
+                    if (myShip2.position.x != myShip1.shipWidth/2){
+                        throw new Exception("The ship isn't moving correctly" +
+                                "when moving at the left bound");
+                    }
+                } else {
+                    if (myShip1.position.x != myShip2.position.x + myShip1.moveShip){
+                        throw new Exception("The ship isn't moving correctly " +
+                                "when moving left");
+                    }
+                }
+            } else {
+                if (myShip1.position.x > (myShip1.screenWidth - 
+                        myShip1.moveShip - myShip1.shipWidth/2)) {
+                    if (myShip2.position.x != myShip1.screenWidth - myShip1.shipWidth/2){
+                        throw new Exception("The ship isn't moving correctly" +
+                                "when moving at the right bound");
+                    }
+                } else {
+                    if (myShip1.position.x != myShip2.position.x - myShip1.moveShip){
+                        throw new Exception("The ship isn't moving correctly " +
+                                "when moving right");
+                    }
+                }
+            }
+            
+            myShip1 = myShip2;
+            
+            checkMoveShip++;
+        }
+    }
+    
+    
     
     public static void main(String[] args) throws Exception {
         Spaceship t1 = new Spaceship(300, 600);
         
         t1.checkOnKey();
+        t1.checkMoveShip();
         
         System.out.println(checkOnKey);
+        System.out.println(checkMoveShip);
         
     }
     
