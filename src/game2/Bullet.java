@@ -88,7 +88,7 @@ public class Bullet {
                 }
             } else {
                 if (bullet1.position.y - bullet1.moveRate != bullet2.position.y){
-                    throw new Exception("The bullet isn't moving corrctly up");
+                    throw new Exception("The bullet isn't moving correctly up");
                 }
             }
             checkOnTick++;
