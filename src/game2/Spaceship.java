@@ -147,8 +147,6 @@ public class Spaceship implements Ship{
                 myShip2 = myShip2.onKey("left");
             }
             
-            System.out.println(myShip1.position.x + ", " + myShip2.position.x);
-            
             if(randInt == 2){
                 if (myShip1.position.x < myShip1.shipWidth/2 + myShip1.moveShip) {
                     if (myShip2.position.x != myShip1.shipWidth/2){
@@ -190,8 +188,8 @@ public class Spaceship implements Ship{
         t1.checkOnKey();
         t1.checkMoveShip();
         
-        System.out.println(checkOnKey);
-        System.out.println(checkMoveShip);
+        System.out.println("checkOnKey passed " + checkOnKey + " times");
+        System.out.println("checkMoveShip passed " + checkMoveShip + " times");
         
     }
     
