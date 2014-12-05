@@ -149,7 +149,7 @@ public class Bullet {
         checkOutOfBounds();
         
         System.out.println("checkOnTick passed " + checkOnTick + " times");
-        System.out.println("checkOutOfBounds passed " + checkOutOfBounds + "times");
+        System.out.println("checkOutOfBounds passed " + checkOutOfBounds + " times");
     }
     
     
