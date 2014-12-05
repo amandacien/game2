@@ -58,24 +58,24 @@ public class Enemy implements Ship {
     }
     
     public Enemy onTick() {
-        int moveCase = this.setMoveCase();
+        int newMoveCase = this.setMoveCase();
         
         if (this.moveCase == 1){
             return new Enemy(this.screenWidth, this.screenHeight, 
                     new Posn(this.position.x - this.moveRate, this.position.y), 
-                    this.isHit, moveCase);
+                    this.isHit, newMoveCase);
         } else if (this.moveCase == 2){
             return new Enemy(this.screenWidth, this.screenHeight, 
                     new Posn(this.position.x + this.moveRate, this.position.y), 
-                    this.isHit, moveCase);
+                    this.isHit, newMoveCase);
         } else if (this.moveCase == 3){
             return new Enemy(this.screenWidth, this.screenHeight, 
                     new Posn(this.position.x,this.position.y + this.shipHeight), 
-                    this.isHit, moveCase);
+                    this.isHit, newMoveCase);
         } else /* moveCase == 4 */{
             return new Enemy(this.screenWidth, this.screenHeight, 
                     new Posn(this.position.x,this.position.y + this.shipHeight), 
-                    this.isHit, moveCase);
+                    this.isHit, newMoveCase);
         }
     }
     
