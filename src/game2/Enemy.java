@@ -27,6 +27,10 @@ public class Enemy implements Ship {
     int screenWidth;
     int screenHeight;
     
+    
+    //Movement rate 
+    int moveRate = 10;
+    
     //Win Case, true if game is going on 
     boolean isHit; 
     
@@ -54,18 +58,44 @@ public class Enemy implements Ship {
     }
     
     public Enemy onTick() {
+        int moveCase = this.setMoveCase();
+        
         if (this.moveCase == 1){
             return new Enemy(this.screenWidth, this.screenHeight, 
-                    new Posn(this.position.x,this.position.y), this.isHit, this.moveCase);
+                    new Posn(this.position.x - this.moveRate, this.position.y), 
+                    this.isHit, moveCase);
         } else if (this.moveCase == 2){
             return new Enemy(this.screenWidth, this.screenHeight, 
-                    new Posn(this.position.x,this.position.y), this.isHit, this.moveCase);
+                    new Posn(this.position.x + this.moveRate, this.position.y), 
+                    this.isHit, moveCase);
         } else if (this.moveCase == 3){
             return new Enemy(this.screenWidth, this.screenHeight, 
-                    new Posn(this.position.x,this.position.y), this.isHit, this.moveCase);
+                    new Posn(this.position.x,this.position.y + this.shipHeight), 
+                    this.isHit, moveCase);
         } else /* moveCase == 4 */{
             return new Enemy(this.screenWidth, this.screenHeight, 
-                    new Posn(this.position.x,this.position.y), this.isHit, this.moveCase);
+                    new Posn(this.position.x,this.position.y + this.shipHeight), 
+                    this.isHit, moveCase);
+        }
+    }
+    
+    private int setMoveCase() {
+        if (this.moveCase == 1){
+            if (this.position.x - this.moveRate < 0 ) {
+                return 3;
+            } else {
+                return 1; 
+            }
+        } else if (this.moveCase == 2){
+            if (this.position.x + this.moveRate > this.screenWidth){
+                return 4;
+            } else {
+                return 2;
+            }
+        } else if (this.moveCase == 3){
+            return 2;
+        } else /* moveCase == 4 */{
+            return 1;
         }
     }
     
