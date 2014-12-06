@@ -57,7 +57,7 @@ public class Bullet {
     
     static Random rand = new Random();
     
-    //returns a random int from 1 to x
+    //returns a random int from start with a range of range 
     private static int randInt(int start, int range) {
         return rand.nextInt(range) + start ;
     }
