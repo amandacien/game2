@@ -104,9 +104,23 @@ public class Enemy implements Ship {
     }
     
     
-    
-    
-    
+    public boolean isHit(Bullet bullet) {
+        // to take into account the bullets that the enemy makes itself
+        if (bullet.position.y < this.position.y - this.shipHeight/2 + bullet.bulletRadius/2){
+            if (bullet.position.y > this.position.y + this.shipHeight/2 ) {
+                if (bullet.position.y > this.position.y - this.shipWidth
+                        && bullet.position.y < this.position.y + this.shipWidth ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
     
     
     //Testing Code 
