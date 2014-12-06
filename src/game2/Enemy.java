@@ -140,6 +140,7 @@ public class Enemy implements Ship {
     //Testing Code 
     static int testMovingCorrectly = 0;
     static int testIsHit = 0;
+    static int testMakeBullet = 0;
     
     private static void testMovingCorrectly() throws Exception {
         for (int i = 0; i < 1000; i++){
@@ -237,14 +238,39 @@ public class Enemy implements Ship {
             testIsHit++;
         }
     }
+    
+    private static void testMakeBullet() throws Exception{
+        for (int i = 0; i < 1000; i++) {
+            Enemy en1 = new Enemy(300, 600);
+            int randPosX = randInt(en1.shipWidth/2, en1.screenWidth - en1.shipWidth);
+            int randPosY = randInt(en1.shipHeight/2, en1.screenHeight - en1.shipHeight);
+            Enemy en2 = new Enemy(en1.screenWidth, en1.screenHeight, 
+                    new Posn(randPosX, randPosY), en1.isHit, randInt(1,4));
+            
+            Bullet bullet = en2.makeBullet();
+            
+            if(bullet.position.x != en2.position.x){
+                throw new Exception("It's not creating at the correct X point");
+            } 
+            if(bullet.position.y != en2.position.y + en2.shipHeight/2){
+                throw new Exception("It's not creating at the correct Y point");
+            }
+            testMakeBullet++;
+        }
+    }
         
     public static void main(String[] args) throws Exception {
             testMovingCorrectly();
             testIsHit();
+            testMakeBullet();
+            
             
             System.out.println("testMovingCorrectly ran " + testMovingCorrectly 
                     + " times");
             System.out.println("testIsHit ran " + testIsHit 
                     + " times");
+            System.out.println("testMakeBullet ran " + testMakeBullet 
+                    + " times");
     }
+    
 }
