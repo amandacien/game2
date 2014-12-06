@@ -49,7 +49,7 @@ public class Enemy implements Ship {
         this.moveCase = 1;
     }
     
-    private Enemy(int screenWidth, int screenHeight, Posn position, boolean isHit, int moveCase){
+    public Enemy(int screenWidth, int screenHeight, Posn position, boolean isHit, int moveCase){
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.position = position;
@@ -106,7 +106,7 @@ public class Enemy implements Ship {
     
     public boolean isHit(Bullet bullet) {
         // to take into account the bullets that the enemy makes itself
-        if (bullet.position.y < this.position.y - this.shipHeight/2 + bullet.bulletRadius/2){
+        if (bullet.position.y < this.position.y + this.shipHeight/2 - bullet.bulletRadius/2){
             if (bullet.position.y > this.position.y + this.shipHeight/2 ) {
                 if (bullet.position.y > this.position.y - this.shipWidth
                         && bullet.position.y < this.position.y + this.shipWidth ) {
@@ -125,6 +125,7 @@ public class Enemy implements Ship {
     
     //Testing Code 
     static int testMovingCorrectly = 0;
+    static int testIsHit = 0;
     static Random rand = new Random();
     
     //returns a random int from stars of a certain range
@@ -194,11 +195,48 @@ public class Enemy implements Ship {
             testMovingCorrectly++;
         }
     }
+    
+    
+    private static void testIsHit() throws Exception {
+        for (int i = 0; i < 1000; i++) {
+            
+            int screenWidth = 300;
+            int screenHeight = 600;
+            Posn randPosn = new Posn(randInt(0, screenWidth), randInt(0, screenHeight));
+            Bullet bullet = new Bullet(randPosn, randInt(1,3) , screenWidth, screenHeight, -1);
+            
+            
+            Enemy en1 = new Enemy(screenWidth, screenHeight);
+            int randPosX = randInt(en1.shipWidth/2, en1.screenWidth - en1.shipWidth);
+            int randPosY = randInt(en1.shipHeight/2, en1.screenHeight - en1.shipHeight);
+            Enemy en2 = new Enemy(en1.screenWidth, en1.screenHeight, 
+                    new Posn(randPosX, randPosY), en1.isHit, randInt(1,4));
+            
+            if (bullet.position.x > en2.position.x - en2.shipWidth/2 &&
+                bullet.position.x < en2.position.x + en2.shipWidth/2 &&
+                bullet.position.y > en2.position.y - en2.shipHeight/2 && 
+                bullet.position.y < en2.position.y + en2.shipHeight/2 - bullet.bulletRadius/2){
+                if (!en2.isHit(bullet)){
+                    throw new Exception("The bullet is hitting the enemy, " + 
+                            "but the method isHit is returning false");
+                }
+            } else {
+                if (en2.isHit(bullet)){
+                    throw new Exception("The bullet is not hitting the enemy, " + 
+                            "but the method isHit is returning true");
+                }
+            }
+            testIsHit++;
+        }
+    }
         
     public static void main(String[] args) throws Exception {
             testMovingCorrectly();
+            testIsHit();
             
             System.out.println("testMovingCorrectly ran " + testMovingCorrectly 
+                    + " times");
+            System.out.println("testIsHit ran " + testIsHit 
                     + " times");
     }
 }

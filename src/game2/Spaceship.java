@@ -40,7 +40,7 @@ public class Spaceship implements Ship{
     //Win Case, true if game is going on 
     boolean winCase; 
     
-    Spaceship(int screenWidth, int screenHeight){
+    public Spaceship(int screenWidth, int screenHeight){
         this.position = new Posn(screenWidth/2, screenHeight - 10);
         this.red = 5;
         this.blue = 5;
@@ -50,7 +50,7 @@ public class Spaceship implements Ship{
         this.screenHeight = screenHeight;
     }
     
-    Spaceship(Posn position, int red, int blue, int yellow, boolean winCase,
+    private Spaceship(Posn position, int red, int blue, int yellow, boolean winCase,
                 int screenWidth, int screenHeight){
         this.position = position;
         this.red = red;

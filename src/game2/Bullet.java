@@ -29,7 +29,7 @@ public class Bullet {
     //1, going down, -1 going up
     int direction;
     
-    Bullet(Posn position, int color, int screenWidth, int screenHeight, int direction){
+    public Bullet(Posn position, int color, int screenWidth, int screenHeight, int direction){
         this.position = position;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
