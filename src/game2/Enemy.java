@@ -41,6 +41,15 @@ public class Enemy implements Ship {
     // 4 : rightDown
     int moveCase;
     
+    
+    //random generator stuff
+    static Random rand = new Random();
+    
+    private static int randInt(int start, int range) {
+        return rand.nextInt(range) + start ;
+    }
+    
+    
     public Enemy (int screenWidth, int screenHeight) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -122,16 +131,15 @@ public class Enemy implements Ship {
         }
     }
     
+    public Bullet makeBullet(){
+        return new Bullet(new Posn(this.position.x, this.position.y + this.shipHeight/2), 
+                randInt(1, 3), this.screenWidth, this.screenHeight, 1);
+    }
+    
     
     //Testing Code 
     static int testMovingCorrectly = 0;
     static int testIsHit = 0;
-    static Random rand = new Random();
-    
-    //returns a random int from stars of a certain range
-    private static int randInt(int start, int range) {
-        return rand.nextInt(range) + start ;
-    }
     
     private static void testMovingCorrectly() throws Exception {
         for (int i = 0; i < 1000; i++){
