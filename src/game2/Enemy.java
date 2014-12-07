@@ -111,8 +111,7 @@ public class Enemy implements Ship {
     public Enemy onKey(String key){
         return this;
     }
-    
-    
+   
     public boolean isHit(Bullet bullet) {
         // to take into account the bullets that the enemy makes itself
         if (bullet.position.y < this.position.y + this.shipHeight/2 - bullet.bulletRadius/2){
@@ -271,6 +270,7 @@ public class Enemy implements Ship {
                     + " times");
             System.out.println("testMakeBullet ran " + testMakeBullet 
                     + " times");
+            
     }
     
 }
