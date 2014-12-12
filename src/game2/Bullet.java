@@ -17,6 +17,7 @@ public class Bullet {
     Posn position;
     
     //Colors, (1 red) (2 blue) (3 yellow)
+    //        (4 white - bullet hitting the enemy)
     int color;
     
     final int moveRate = 5;

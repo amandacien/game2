@@ -40,6 +40,10 @@ public class Spaceship implements Ship{
     //Win Case, true if game is going on 
     boolean winCase; 
     
+    private static int randInt(int start, int range) {
+        return rand.nextInt(range) + start ;
+    }
+    
     public Spaceship(int screenWidth, int screenHeight){
         this.position = new Posn(screenWidth/2, screenHeight - 10);
         this.red = 5;
@@ -51,7 +55,7 @@ public class Spaceship implements Ship{
     }
     
     private Spaceship(Posn position, int red, int blue, int yellow, boolean winCase,
-                int screenWidth, int screenHeight){
+            int screenWidth, int screenHeight) {
         this.position = position;
         this.red = red;
         this.blue = blue;
@@ -94,27 +98,67 @@ public class Spaceship implements Ship{
     }    
     
     
+    public Bullet makeBullet(){
+        return new Bullet(new Posn(this.position.x, this.position.y - this.shipHeight/2), 
+                4, this.screenWidth, this.screenHeight, -1);
+    }
     
     
-    
-    
+    public Spaceship isHit(Bullet bullet) {
+        boolean hitCase = (bullet.position.x < this.position.x + this.shipWidth/2 &&
+                bullet.position.x > this.position.x - this.shipWidth/2 &&
+                bullet.position.y > this.position.y - this.shipHeight/2 &&
+                bullet.position.y < this.position.y + this.shipHeight/2);
+        
+        if (bullet.color == 1)/*red*/ {
+            if (hitCase) {
+                if (this.red == 0) {
+                    return new Spaceship(this.position, this.red, this.blue, 
+                                this.yellow, false, this.screenWidth, this.screenHeight);
+                } else {
+                    return new Spaceship(this.position, this.red - 1, this.blue, 
+                                this.yellow, true, this.screenWidth, this.screenHeight);
+                }
+            }
+        } else if (bullet.color == 2)/*blue*/ {
+            if (hitCase) {
+                if (this.blue == 0) {
+                    return new Spaceship(this.position, this.red, this.blue, 
+                                this.yellow, false, this.screenWidth, this.screenHeight);
+                } else {
+                    return new Spaceship(this.position, this.red, this.blue - 1 , 
+                                this.yellow, true, this.screenWidth, this.screenHeight);
+                }
+            }
+        } else if (bullet.color == 3)/*yellow*/ {
+            if (hitCase) {
+                if (this.yellow == 0) {
+                    return new Spaceship(this.position, this.red, this.blue, 
+                                this.yellow, false, this.screenWidth, this.screenHeight);
+                } else {
+                    return new Spaceship(this.position, this.red, this.blue, 
+                                this.yellow - 1, true, this.screenWidth, this.screenHeight);
+                }
+            }
+        } else {
+            return this;
+        }
+    } 
     
     //Testing Code
     static int checkOnKey = 0;
     static int checkMoveShip = 0;
+    static int testIsHit = 0;
+    static int testMakeBullet = 0;
     static Random rand = new Random();
     
-    //returns a random int from 1 to x
-    private static int randInt(int x) {
-        return rand.nextInt(x) + 1 ;
-    }
     
     private void checkOnKey() throws Exception {
         
         Spaceship myShip2 = this;
         
         for (int i = 0; i < 1000; i++) {
-            int randInt = randInt(2);
+            int randInt = randInt(1,2);
             
             if (randInt == 1) {
                 myShip2 = myShip2.onKey("right");
@@ -139,7 +183,7 @@ public class Spaceship implements Ship{
         Spaceship myShip2 = myShip1;
         
         for (int i = 0; i < 1000; i++) {
-            int randInt = randInt(2);
+            int randInt = randInt(1, 2);
             
             if (randInt == 1) {
                 myShip2 = myShip2.onKey("right");
@@ -181,6 +225,28 @@ public class Spaceship implements Ship{
     }
     
     
+    
+    private static void testMakeBullet() throws Exception{
+        for (int i = 0; i < 1000; i++) {
+            Spaceship sp1 = new Spaceship(300, 600);
+            int randPosX = randInt(sp1.shipWidth/2, sp1.screenWidth - sp1.shipWidth);
+            int randPosY = randInt(sp1.shipHeight/2, sp1.screenHeight - sp1.shipHeight);
+            
+            
+            Spaceship sp2 = new Spaceship(new Posn(randPosX, randPosY), sp1.red, sp1.blue,
+                    sp1.yellow, sp1.winCase, sp1.screenWidth, sp1.screenHeight);
+            
+            Bullet bullet = sp2.makeBullet();
+            
+            if(bullet.position.x != sp2.position.x){
+                throw new Exception("It's not creating at the correct X point");
+            } 
+            if(bullet.position.y != sp2.position.y - sp2.shipHeight/2){
+                throw new Exception("It's not creating at the correct Y point");
+            }
+            testMakeBullet++;
+        }
+    }
     
     public static void main(String[] args) throws Exception {
         Spaceship t1 = new Spaceship(300, 600);

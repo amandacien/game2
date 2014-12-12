@@ -31,7 +31,7 @@ public class Enemy implements Ship {
     //Movement rate 
     int moveRate = 10;
     
-    //Win Case, true if game is going on 
+    //Win Case, true if the ship is hit
     boolean isHit; 
     
     //moveCases: 
@@ -112,21 +112,24 @@ public class Enemy implements Ship {
         return this;
     }
    
-    public boolean isHit(Bullet bullet) {
-        // to take into account the bullets that the enemy makes itself
-        if (bullet.position.y < this.position.y + this.shipHeight/2 - bullet.bulletRadius/2){
-            if (bullet.position.y > this.position.y + this.shipHeight/2 ) {
-                if (bullet.position.y > this.position.y - this.shipWidth
-                        && bullet.position.y < this.position.y + this.shipWidth ) {
-                    return true;
-                } else {
-                    return false;
-                }
+    public Enemy isHit(Bullet bullet) {
+        if (bullet.color == 4){
+            if (bullet.position.x < this.position.x + this.shipWidth/2 &&
+                bullet.position.x > this.position.x - this.shipWidth/2 &&
+                bullet.position.y > this.position.y - this.shipHeight/2 &&
+                bullet.position.y < this.position.y + this.shipHeight/2){
+                    return new Enemy(this.screenWidth, this.screenHeight, 
+                            new Posn(this.position.x,this.position.y + this.shipHeight),
+                            true, this.moveCase);
             } else {
-                return false;
+                return new Enemy(this.screenWidth, this.screenHeight, 
+                            new Posn(this.position.x,this.position.y + this.shipHeight),
+                            false, this.moveCase);
             }
         } else {
-            return false;
+            return new Enemy(this.screenWidth, this.screenHeight, 
+                            new Posn(this.position.x,this.position.y + this.shipHeight),
+                            false, this.moveCase);
         }
     }
     
@@ -211,7 +214,7 @@ public class Enemy implements Ship {
             int screenWidth = 300;
             int screenHeight = 600;
             Posn randPosn = new Posn(randInt(0, screenWidth), randInt(0, screenHeight));
-            Bullet bullet = new Bullet(randPosn, randInt(1,3) , screenWidth, screenHeight, -1);
+            Bullet bullet = new Bullet(randPosn, randInt(1,4) , screenWidth, screenHeight, -1);
             
             
             Enemy en1 = new Enemy(screenWidth, screenHeight);
@@ -219,21 +222,30 @@ public class Enemy implements Ship {
             int randPosY = randInt(en1.shipHeight/2, en1.screenHeight - en1.shipHeight);
             Enemy en2 = new Enemy(en1.screenWidth, en1.screenHeight, 
                     new Posn(randPosX, randPosY), en1.isHit, randInt(1,4));
+            Enemy en3 = en2.isHit(bullet);
             
-            if (bullet.position.x > en2.position.x - en2.shipWidth/2 &&
-                bullet.position.x < en2.position.x + en2.shipWidth/2 &&
-                bullet.position.y > en2.position.y - en2.shipHeight/2 && 
-                bullet.position.y < en2.position.y + en2.shipHeight/2 - bullet.bulletRadius/2){
-                if (!en2.isHit(bullet)){
-                    throw new Exception("The bullet is hitting the enemy, " + 
-                            "but the method isHit is returning false");
+            if (bullet.color == 4){
+                if (bullet.position.x > en2.position.x - en2.shipWidth/2 &&
+                    bullet.position.x < en2.position.x + en2.shipWidth/2 &&
+                    bullet.position.y > en2.position.y - en2.shipHeight/2 && 
+                    bullet.position.y < en2.position.y + en2.shipHeight/2){
+                    if (!en3.isHit){
+                        throw new Exception("The bullet is hitting the enemy, " + 
+                                "but the method isHit is returning false");
+                    }
+                } else {
+                    if (en3.isHit){
+                        throw new Exception("The bullet is not hitting the enemy, " + 
+                                "but the method isHit is returning true");
+                    }
                 }
             } else {
-                if (en2.isHit(bullet)){
-                    throw new Exception("The bullet is not hitting the enemy, " + 
-                            "but the method isHit is returning true");
+                if (en3.isHit){
+                    throw new Exception ("The bullet isn't from the enemy so" + 
+                            " it shouldn't be hit");
                 }
             }
+            
             testIsHit++;
         }
     }
