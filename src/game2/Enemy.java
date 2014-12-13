@@ -131,7 +131,7 @@ public class Enemy implements Ship {
     
     public Bullet makeBullet(){
         return new Bullet(new Posn(this.position.x, this.position.y + this.shipHeight/2), 
-                randInt(1, 3), this.screenWidth, this.screenHeight, 1);
+                randInt(1, 3), this.screenWidth, this.screenHeight, 1, true);
     }
     
     

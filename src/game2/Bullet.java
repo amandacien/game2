@@ -30,19 +30,24 @@ public class Bullet {
     //1, going down, -1 going up
     int direction;
     
-    public Bullet(Posn position, int color, int screenWidth, int screenHeight, int direction){
+    //needs to know if it hits an object, it disappears 
+    boolean onScreen;
+    
+    public Bullet(Posn position, int color, int screenWidth, 
+            int screenHeight, int direction, boolean onScreen){
         this.position = position;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.color = color; 
         this.direction = direction;
+        this.onScreen = onScreen;
     }
     
     public Bullet onTick(){
         return new Bullet(new Posn(this.position.x, 
                                    this.position.y + moveRate * direction),
                             this.color, this.screenWidth, 
-                            this.screenHeight, this.direction);
+                            this.screenHeight, this.direction, this.onScreen);
     }
     
     //true for out of bounds
@@ -76,7 +81,7 @@ public class Bullet {
             
             Posn randPosn = new Posn(randInt(0, 300), randInt(0, 600));
             
-            Bullet bullet1 = new Bullet(randPosn, randInt(1,3), 300, 600, randInt);
+            Bullet bullet1 = new Bullet(randPosn, randInt(1,3), 300, 600, randInt, true);
             Bullet bullet2 = bullet1.onTick();
             
             if(randInt == 1){
@@ -113,7 +118,8 @@ public class Bullet {
             int screenHeight = 600;
             
             //creating the bullets to compare
-            Bullet bullet1 = new Bullet(randPosn, randInt(1,3), screenWidth, screenHeight, randInt);
+            Bullet bullet1 = new Bullet(randPosn, randInt(1,3), 
+                    screenWidth, screenHeight, randInt, true);
             Bullet bullet2 = bullet1; 
             
             int randTickInt = randInt(0, 50);

@@ -100,7 +100,7 @@ public class Spaceship implements Ship{
     
     public Bullet makeBullet(){
         return new Bullet(new Posn(this.position.x, this.position.y - this.shipHeight/2), 
-                4, this.screenWidth, this.screenHeight, -1);
+                4, this.screenWidth, this.screenHeight, -1, true);
     }
     
     
