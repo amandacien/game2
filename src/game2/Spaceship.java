@@ -109,7 +109,7 @@ public class Spaceship implements Ship{
                 bullet.position.x > this.position.x - this.shipWidth/2 &&
                 bullet.position.y > this.position.y - this.shipHeight/2 &&
                 bullet.position.y < this.position.y + this.shipHeight/2);
-        
+       
         if (bullet.color == 1)/*red*/ {
             if (hitCase) {
                 if (this.red == 0) {
@@ -119,6 +119,8 @@ public class Spaceship implements Ship{
                     return new Spaceship(this.position, this.red - 1, this.blue, 
                                 this.yellow, true, this.screenWidth, this.screenHeight);
                 }
+            } else {
+                return this;
             }
         } else if (bullet.color == 2)/*blue*/ {
             if (hitCase) {
@@ -129,6 +131,8 @@ public class Spaceship implements Ship{
                     return new Spaceship(this.position, this.red, this.blue - 1 , 
                                 this.yellow, true, this.screenWidth, this.screenHeight);
                 }
+            } else {
+                return this;
             }
         } else if (bullet.color == 3)/*yellow*/ {
             if (hitCase) {
@@ -139,6 +143,8 @@ public class Spaceship implements Ship{
                     return new Spaceship(this.position, this.red, this.blue, 
                                 this.yellow - 1, true, this.screenWidth, this.screenHeight);
                 }
+            } else {
+                return this;
             }
         } else {
             return this;
