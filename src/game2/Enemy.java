@@ -122,14 +122,10 @@ public class Enemy implements Ship {
                             new Posn(this.position.x,this.position.y + this.shipHeight),
                             true, this.moveCase);
             } else {
-                return new Enemy(this.screenWidth, this.screenHeight, 
-                            new Posn(this.position.x,this.position.y + this.shipHeight),
-                            false, this.moveCase);
+                return this;
             }
         } else {
-            return new Enemy(this.screenWidth, this.screenHeight, 
-                            new Posn(this.position.x,this.position.y + this.shipHeight),
-                            false, this.moveCase);
+            return this;
         }
     }
     
@@ -140,6 +136,9 @@ public class Enemy implements Ship {
     
     
     //Testing Code 
+    
+    static int testScreenWidth = 300;
+    static int testScreenHeight = 600;
     static int testMovingCorrectly = 0;
     static int testIsHit = 0;
     static int testMakeBullet = 0;
@@ -148,12 +147,12 @@ public class Enemy implements Ship {
         for (int i = 0; i < 1000; i++){
             int moveCase = randInt(1, 2);
 
-            Enemy en1 = new Enemy(300,600);
+            Enemy en1 = new Enemy(testScreenWidth,testScreenHeight);
 
             int randPosX = randInt(en1.shipWidth/2, en1.screenWidth - en1.shipWidth);
             int randPosY = randInt(en1.shipHeight/2, en1.screenHeight - en1.shipHeight);
 
-            Enemy en2 = new Enemy(300,600, new Posn(randPosX, randPosY), en1.isHit, moveCase);
+            Enemy en2 = new Enemy(testScreenWidth,testScreenHeight, new Posn(randPosX, randPosY), en1.isHit, moveCase);
             Enemy en3 = en2.onTick();
             
             if (moveCase == 1) { 
@@ -211,48 +210,56 @@ public class Enemy implements Ship {
     private static void testIsHit() throws Exception {
         for (int i = 0; i < 1000; i++) {
             
-            int screenWidth = 300;
-            int screenHeight = 600;
-            Posn randPosn = new Posn(randInt(0, screenWidth), randInt(0, screenHeight));
-            Bullet bullet = new Bullet(randPosn, randInt(1,4) , screenWidth, screenHeight, -1);
+            //creating a randomly placed spaceship
+            Spaceship sp1 = new Spaceship(testScreenWidth, testScreenHeight);
+            int spX = randInt(sp1.shipWidth/2, sp1.screenWidth - sp1.shipWidth);
+            Spaceship sp2 = new Spaceship(new Posn(spX, sp1.position.y), sp1.red, sp1.blue,
+                    sp1.yellow, sp1.winCase, sp1.screenWidth, sp1.screenHeight);
             
-            
-            Enemy en1 = new Enemy(screenWidth, screenHeight);
-            int randPosX = randInt(en1.shipWidth/2, en1.screenWidth - en1.shipWidth);
-            int randPosY = randInt(en1.shipHeight/2, en1.screenHeight - en1.shipHeight);
+            //creating a randomly placed enemy
+            Enemy en1 = new Enemy(testScreenWidth, testScreenHeight);
+            int enX = randInt(en1.shipWidth/2, en1.screenWidth - en1.shipWidth);
+            int enY = randInt(en1.shipHeight/2, en1.screenHeight - en1.shipHeight);
             Enemy en2 = new Enemy(en1.screenWidth, en1.screenHeight, 
-                    new Posn(randPosX, randPosY), en1.isHit, randInt(1,4));
-            Enemy en3 = en2.isHit(bullet);
+                    new Posn(enX, enY), en1.isHit, randInt(1,4));
             
-            if (bullet.color == 4){
-                if (bullet.position.x > en2.position.x - en2.shipWidth/2 &&
-                    bullet.position.x < en2.position.x + en2.shipWidth/2 &&
-                    bullet.position.y > en2.position.y - en2.shipHeight/2 && 
-                    bullet.position.y < en2.position.y + en2.shipHeight/2){
-                    if (!en3.isHit){
-                        throw new Exception("The bullet is hitting the enemy, " + 
-                                "but the method isHit is returning false");
-                    }
-                } else {
-                    if (en3.isHit){
-                        throw new Exception("The bullet is not hitting the enemy, " + 
-                                "but the method isHit is returning true");
-                    }
-                }
-            } else {
-                if (en3.isHit){
-                    throw new Exception ("The bullet isn't from the enemy so" + 
-                            " it shouldn't be hit");
-                }
+            //creating a bullet ticked to a random number of tick 
+            int randTick = randInt(1, 150);
+            Bullet bullet = sp1.makeBullet();
+            
+            for (int j = 0; j <= randTick; j++) { 
+                bullet = bullet.onTick();
             }
             
+            Enemy en3 = en2.isHit(bullet);
+            
+            boolean hitCase = (bullet.position.x > en3.position.x - en3.shipWidth/2 &&
+                    bullet.position.x < en3.position.x + en3.shipWidth/2 &&
+                    bullet.position.y > en3.position.y - en3.shipHeight/2 && 
+                    bullet.position.y < en3.position.y + en3.shipHeight/2);
+            
+            if (hitCase) {
+                if (bullet.color == 4) {
+                    if (!en3.isHit) {
+                        throw new Exception("Your ship should should have been hit");
+                    }
+                } else {
+                    throw new Exception("Your spaceship isn't " + 
+                            " making bullets correctly");
+                }
+            } else {
+                if (!en3.equals(en2)) {
+                    throw new Exception("The enemy was not hit and therefore " + 
+                            "should stay the same");
+                }
+            }
             testIsHit++;
         }
     }
     
     private static void testMakeBullet() throws Exception{
         for (int i = 0; i < 1000; i++) {
-            Enemy en1 = new Enemy(300, 600);
+            Enemy en1 = new Enemy(testScreenWidth, 600);
             int randPosX = randInt(en1.shipWidth/2, en1.screenWidth - en1.shipWidth);
             int randPosY = randInt(en1.shipHeight/2, en1.screenHeight - en1.shipHeight);
             Enemy en2 = new Enemy(en1.screenWidth, en1.screenHeight, 

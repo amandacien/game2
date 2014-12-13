@@ -54,7 +54,7 @@ public class Spaceship implements Ship{
         this.screenHeight = screenHeight;
     }
     
-    private Spaceship(Posn position, int red, int blue, int yellow, boolean winCase,
+    public Spaceship(Posn position, int red, int blue, int yellow, boolean winCase,
             int screenWidth, int screenHeight) {
         this.position = position;
         this.red = red;
