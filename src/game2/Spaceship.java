@@ -183,7 +183,6 @@ public class Spaceship implements Ship{
         }
     }
     
-    
     private void checkMoveShip() throws Exception {
         Spaceship myShip1 = this;
         Spaceship myShip2 = myShip1;
@@ -230,16 +229,96 @@ public class Spaceship implements Ship{
         }
     }
     
-    
+    private static void testIsHit() throws Exception {
+        for (int i = 0; i < 1000; i++) {
+            
+            //creating a randomly placed spaceship
+            Spaceship sp1 = new Spaceship(300,600);
+            int spX = randInt(sp1.shipWidth/2, sp1.screenWidth - sp1.shipWidth);
+            Spaceship sp2 = new Spaceship(new Posn(spX, sp1.position.y), sp1.red, sp1.blue,
+                    sp1.yellow, sp1.winCase, sp1.screenWidth, sp1.screenHeight);
+            
+            //creating a randomly placed enemy
+            Enemy en1 = new Enemy(300, 600);
+            int enX = randInt(en1.shipWidth/2, en1.screenWidth - en1.shipWidth);
+            int enY = randInt(en1.shipHeight/2, en1.screenHeight - en1.shipHeight);
+            Enemy en2 = new Enemy(en1.screenWidth, en1.screenHeight, 
+                    new Posn(enX, enY), en1.isHit, randInt(1,4));
+            
+            //creating a bullet ticked to a random number of tick 
+            int randTick = randInt(1, 150);
+            Bullet bullet = en2.makeBullet();
+            
+            for (int j = 0; j <= randTick; j++) { 
+                bullet = bullet.onTick();
+            }
+            
+            Spaceship sp3 = sp2.isHit(bullet);
+            
+            boolean hitCase = (bullet.position.x < sp3.position.x + sp3.shipWidth/2 &&
+                bullet.position.x > sp3.position.x - sp3.shipWidth/2 &&
+                bullet.position.y > sp3.position.y - sp3.shipHeight/2 &&
+                bullet.position.y < sp3.position.y + sp3.shipHeight/2);
+            
+            if (hitCase) {
+                if (bullet.color == 1) /*red*/ {
+                    if (sp2.red == 0) {
+                        if (sp3.winCase != false){
+                            throw new Exception("You got hit by a red bullet " + 
+                                    "with no red shields left, you should have lost");
+                        }
+                    } else {
+                        if (sp3.red != sp2.red - 1) {
+                            throw new Exception("You got hit by a red bullet " + 
+                                    "and should have lost a red shield");
+                        }
+                    }
+                } else if  (bullet.color == 2) /*blue*/ {
+                    if (sp2.blue == 0) {
+                        if (sp3.winCase != false){
+                            throw new Exception("You got hit by a blue bullet " + 
+                                    "with no blue shields left, you should have lost");
+                        }
+                    } else {
+                        if (sp3.blue != sp2.blue - 1) {
+                            throw new Exception("You got hit by a blue bullet " + 
+                                    "and should have lost a blue shield");
+                        }
+                    }
+                } else if (bullet.color == 3) /*yellow*/ {
+                    if (sp2.yellow == 0) {
+                        if (sp3.winCase != false){
+                            throw new Exception("You got hit by a yellow bullet " + 
+                                    "with no yellow shields left, you should have lost");
+                        }
+                    } else {
+                        if (sp3.yellow != sp2.yellow - 1) {
+                            throw new Exception("You got hit by a yellow bullet " + 
+                                    "and should have lost a yellow shield");
+                        }
+                    }
+                } else {
+                    throw new Exception("Your makeBullet function is wrong, it's " +
+                            "not creating the right type of bullets");
+                }
+            } else {
+                if (!sp2.equals(sp3)) {
+                    throw new Exception("The bullet didn't touch the ship, " + 
+                            "the ship before and after should be the same");
+                }
+            } 
+            testIsHit++;
+        }
+    }
     
     private static void testMakeBullet() throws Exception{
         for (int i = 0; i < 1000; i++) {
             Spaceship sp1 = new Spaceship(300, 600);
+            
+            //only x position is random because the ship's y coordinates never change
             int randPosX = randInt(sp1.shipWidth/2, sp1.screenWidth - sp1.shipWidth);
-            int randPosY = randInt(sp1.shipHeight/2, sp1.screenHeight - sp1.shipHeight);
             
-            
-            Spaceship sp2 = new Spaceship(new Posn(randPosX, randPosY), sp1.red, sp1.blue,
+            Spaceship sp2 = new Spaceship(new Posn(randPosX, sp1.position.y), sp1.red, sp1.blue,
                     sp1.yellow, sp1.winCase, sp1.screenWidth, sp1.screenHeight);
             
             Bullet bullet = sp2.makeBullet();
@@ -259,10 +338,13 @@ public class Spaceship implements Ship{
         
         t1.checkOnKey();
         t1.checkMoveShip();
+        testMakeBullet(); 
+        testIsHit();
         
         System.out.println("checkOnKey passed " + checkOnKey + " times");
         System.out.println("checkMoveShip passed " + checkMoveShip + " times");
-        
+        System.out.println("testMakeBullet passed " + testMakeBullet + " times");
+        System.out.println("testIsHit passed " + testIsHit + " times");
     }
     
     

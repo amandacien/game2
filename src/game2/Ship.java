@@ -19,6 +19,7 @@ import javalib.worldimages.*;
 public interface Ship {
     public Ship onTick();
     public Ship onKey(String key);
+    public Ship isHit(Bullet bullet);
     public Bullet makeBullet();
     
 }
