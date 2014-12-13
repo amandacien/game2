@@ -55,6 +55,23 @@ public class Bullet {
         return (this.position.y < 0 || this.position.y > this.screenHeight);
     }
     
+    //The bullet only had to stop if it hits an enemy, becuase once the player
+    //is hit, the game is over 
+    public Bullet isHit(Enemy enemy){
+        if (this.color == 4){
+            if (this.position.x < enemy.position.x + enemy.shipWidth/2 &&
+                this.position.x > enemy.position.x - enemy.shipWidth/2 &&
+                this.position.y > enemy.position.y - enemy.shipHeight/2 &&
+                this.position.y < enemy.position.y + enemy.shipHeight/2){
+                    return new Bullet(this.position,this.color, this.screenWidth, 
+                            this.screenHeight, this.direction, false);
+            } else {
+                return this;
+            }
+        } else {
+            return this;
+        }
+    }
     
     //testing 
     
