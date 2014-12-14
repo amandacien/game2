@@ -152,6 +152,8 @@ public class Spaceship implements Ship{
     } 
     
     //Testing Code
+    static int testScreenWidth = 300;
+    static int testScreenHeight = 600;
     static int checkOnKey = 0;
     static int checkMoveShip = 0;
     static int testIsHit = 0;
@@ -233,13 +235,13 @@ public class Spaceship implements Ship{
         for (int i = 0; i < 1000; i++) {
             
             //creating a randomly placed spaceship
-            Spaceship sp1 = new Spaceship(300,600);
+            Spaceship sp1 = new Spaceship(testScreenWidth, testScreenHeight);
             int spX = randInt(sp1.shipWidth/2, sp1.screenWidth - sp1.shipWidth);
             Spaceship sp2 = new Spaceship(new Posn(spX, sp1.position.y), sp1.red, sp1.blue,
                     sp1.yellow, sp1.winCase, sp1.screenWidth, sp1.screenHeight);
             
             //creating a randomly placed enemy
-            Enemy en1 = new Enemy(300, 600);
+            Enemy en1 = new Enemy(testScreenWidth, testScreenHeight);
             int enX = randInt(en1.shipWidth/2, en1.screenWidth - en1.shipWidth);
             int enY = randInt(en1.shipHeight/2, en1.screenHeight - en1.shipHeight);
             Enemy en2 = new Enemy(en1.screenWidth, en1.screenHeight, 
@@ -313,7 +315,7 @@ public class Spaceship implements Ship{
     
     private static void testMakeBullet() throws Exception{
         for (int i = 0; i < 1000; i++) {
-            Spaceship sp1 = new Spaceship(300, 600);
+            Spaceship sp1 = new Spaceship(testScreenWidth, testScreenHeight);
             
             //only x position is random because the ship's y coordinates never change
             int randPosX = randInt(sp1.shipWidth/2, sp1.screenWidth - sp1.shipWidth);
@@ -334,7 +336,7 @@ public class Spaceship implements Ship{
     }
     
     public static void main(String[] args) throws Exception {
-        Spaceship t1 = new Spaceship(300, 600);
+        Spaceship t1 = new Spaceship(testScreenWidth, testScreenHeight);
         
         t1.checkOnKey();
         t1.checkMoveShip();

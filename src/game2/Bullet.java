@@ -74,7 +74,8 @@ public class Bullet {
     }
     
     //testing 
-    
+    static int testScreenWidth = 300;
+    static int testScreenHeight = 600;
     static int checkOnTick;
     static int checkOutOfBounds;
     
@@ -96,9 +97,10 @@ public class Bullet {
                 randInt = 1;
             }
             
-            Posn randPosn = new Posn(randInt(0, 300), randInt(0, 600));
+            Posn randPosn = new Posn(randInt(0, testScreenWidth), randInt(0, testScreenHeight));
             
-            Bullet bullet1 = new Bullet(randPosn, randInt(1,3), 300, 600, randInt, true);
+            Bullet bullet1 = new Bullet(randPosn, randInt(1,3), testScreenWidth, 
+                    testScreenHeight, randInt, true);
             Bullet bullet2 = bullet1.onTick();
             
             if(randInt == 1){
@@ -126,17 +128,14 @@ public class Bullet {
             }
             
             //random Positions
-            int randX = randInt(0,300);
-            int randY = randInt(0, 600);
+            int randX = randInt(0,testScreenWidth);
+            int randY = randInt(0, testScreenHeight);
             Posn randPosn = new Posn(randX, randY);
             
-            //screen dimmensions
-            int screenWidth = 300;
-            int screenHeight = 600;
             
             //creating the bullets to compare
             Bullet bullet1 = new Bullet(randPosn, randInt(1,3), 
-                    screenWidth, screenHeight, randInt, true);
+                    testScreenWidth, testScreenHeight, randInt, true);
             Bullet bullet2 = bullet1; 
             
             int randTickInt = randInt(0, 50);
@@ -150,7 +149,7 @@ public class Bullet {
             
             
             //checks the cases of being bound
-            if(randInt == 1 && bulletAfterPosn > screenHeight){
+            if(randInt == 1 && bulletAfterPosn > testScreenHeight){
                 if (!bullet2.outOfBounds()) {
                    throw new Exception("The bullet is actually out of bounds on the bottom");
                 }
@@ -165,6 +164,12 @@ public class Bullet {
             }
             
             checkOutOfBounds++;
+        }
+    }
+    
+    public static void checkBulletIsHit(){
+        for (int i = 0; i < 1000; i++){ 
+            
         }
     }
     
