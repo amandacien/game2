@@ -206,7 +206,7 @@ public class Enemy implements Ship {
         }
     }
     
-    /*
+    
     private static void testIsHit() throws Exception {
         for (int i = 0; i < 100; i++) {
             
@@ -259,7 +259,7 @@ public class Enemy implements Ship {
             
             testIsHit++;
         }
-    }*/
+    }
     
     private static void testMakeBullet() throws Exception{
         for (int i = 0; i < 1000; i++) {
@@ -283,14 +283,14 @@ public class Enemy implements Ship {
         
     public static void main(String[] args) throws Exception {
             testMovingCorrectly();
-            //testIsHit();
+            testIsHit();
             testMakeBullet();
             
             
             System.out.println("testMovingCorrectly ran " + testMovingCorrectly 
                     + " times");
-            //System.out.println("testIsHit ran " + testIsHit 
-            //        + " times");
+            System.out.println("testIsHit ran " + testIsHit 
+                    + " times");
             System.out.println("testMakeBullet ran " + testMakeBullet 
                     + " times");
             
