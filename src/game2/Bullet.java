@@ -5,7 +5,7 @@
  */
 
 package game2;
-import java.util.Random;
+import java.util.*;
 import javalib.worldimages.*;
 
 /**
@@ -50,12 +50,17 @@ public class Bullet {
                             this.screenHeight, this.direction, this.onScreen);
     }
     
-    //true for out of bounds
-    public boolean outOfBounds(){
-        return (this.position.y < 0 || this.position.y > this.screenHeight);
+    //returns a new bullet saying if the bullet is still on the screen
+    public Bullet outOfBounds(){
+        if (this.position.y < 0 || this.position.y > this.screenHeight) {
+            return new Bullet(this.position,this.color, this.screenWidth, 
+                            this.screenHeight, this.direction, false);
+        } else {
+            return this;
+        }
     }
     
-    //The bullet only had to stop if it hits an enemy, becuase once the player
+    //The bullet only has to stop if it hits an enemy, becuase once the player
     //is hit, the game is over 
     public Bullet isHit(Enemy enemy){
         if (this.color == 4){
@@ -78,7 +83,7 @@ public class Bullet {
     static int testScreenHeight = 600;
     static int checkOnTick;
     static int checkOutOfBounds;
-    
+    static int checkBulletIsHit;
     static Random rand = new Random();
     
     //returns a random int from start with a range of range 
@@ -141,7 +146,7 @@ public class Bullet {
             int randTickInt = randInt(0, 50);
             
             for(int k = 0; k < randTickInt; k++){
-                bullet2 = bullet2.onTick();
+                bullet2 = bullet2.onTick().outOfBounds();
             }
             
             //what is potentially the bullet placement after the ticking
@@ -150,15 +155,15 @@ public class Bullet {
             
             //checks the cases of being bound
             if(randInt == 1 && bulletAfterPosn > testScreenHeight){
-                if (!bullet2.outOfBounds()) {
+                if (bullet2.onScreen) {
                    throw new Exception("The bullet is actually out of bounds on the bottom");
                 }
             } else if (randInt == -1 && bulletAfterPosn < 0) { 
-                if (!bullet2.outOfBounds()){
+                if (bullet2.onScreen){
                     throw new Exception("The bullet is actually out of bounds on the top");
                 }
             } else {
-                if (bullet2.outOfBounds()){
+                if (!bullet2.onScreen){
                     throw new Exception("The bullet is actually within the bounds of the screen: ");
                 }
             }
@@ -167,18 +172,60 @@ public class Bullet {
         }
     }
     
-    public static void checkBulletIsHit(){
+    
+    public static void checkBulletIsHit() throws Exception {
         for (int i = 0; i < 1000; i++){ 
             
+            //creating a randomly placed spaceship
+            Spaceship sp1 = new Spaceship(testScreenWidth, testScreenHeight);
+            int spX = randInt(sp1.shipWidth/2, sp1.screenWidth - sp1.shipWidth);
+            Spaceship sp2 = new Spaceship(new Posn(spX, sp1.position.y), sp1.red, sp1.blue,
+                    sp1.yellow, sp1.winCase, sp1.screenWidth, sp1.screenHeight);
+            
+            //creating a randomly placed enemy
+            Enemy en1 = new Enemy(testScreenWidth, testScreenHeight);
+            int enX = randInt(en1.shipWidth/2, en1.screenWidth - en1.shipWidth);
+            int enY = randInt(en1.shipHeight/2, en1.screenHeight - en1.shipHeight);
+            Enemy en2 = new Enemy(en1.screenWidth, en1.screenHeight, 
+                    new Posn(enX, enY), en1.isHit, randInt(1,4));
+            
+            Bullet bullet = sp1.makeBullet();
+            
+            int randTick = randInt(0, (testScreenHeight - sp1.shipHeight)/bullet.moveRate);
+            
+            for (int j = 0; j < randTick; j++) {
+                bullet = bullet.onTick();
+                en2 = en2.onTick();
+                
+                bullet = bullet.isHit(en2);
+                en2 = en2.isHit(bullet);
+            }
+            
+            if (bullet.onScreen) {
+                if (en2.isHit) {
+                    throw new Exception("The bullet is still on the screen," + 
+                            " which means the enemy was not hit");
+                }
+            } else {
+                if (!en2.isHit) {
+                    throw new Exception("The bullet is offscreen" + 
+                            " which means the enemy was hit");
+                }
+            }
+            
+            checkBulletIsHit++;
         }
     }
     
     public static void main(String[] args) throws Exception {
         checkOnTick();
         checkOutOfBounds();
+        checkBulletIsHit();
         
         System.out.println("checkOnTick passed " + checkOnTick + " times");
         System.out.println("checkOutOfBounds passed " + checkOutOfBounds + " times");
+        System.out.println("checkBulletIsHit passed " + checkBulletIsHit + " times");
+        
     }
     
     

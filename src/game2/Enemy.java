@@ -206,9 +206,9 @@ public class Enemy implements Ship {
         }
     }
     
-    
+    /*
     private static void testIsHit() throws Exception {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             
             //creating a randomly placed spaceship
             Spaceship sp1 = new Spaceship(testScreenWidth, testScreenHeight);
@@ -238,6 +238,7 @@ public class Enemy implements Ship {
                     bullet.position.y > en3.position.y - en3.shipHeight/2 && 
                     bullet.position.y < en3.position.y + en3.shipHeight/2);
             
+            
             if (hitCase) {
                 if (bullet.color == 4) {
                     if (!en3.isHit) {
@@ -253,9 +254,12 @@ public class Enemy implements Ship {
                             "should stay the same");
                 }
             }
+            
+            
+            
             testIsHit++;
         }
-    }
+    }*/
     
     private static void testMakeBullet() throws Exception{
         for (int i = 0; i < 1000; i++) {
@@ -279,14 +283,14 @@ public class Enemy implements Ship {
         
     public static void main(String[] args) throws Exception {
             testMovingCorrectly();
-            testIsHit();
+            //testIsHit();
             testMakeBullet();
             
             
             System.out.println("testMovingCorrectly ran " + testMovingCorrectly 
                     + " times");
-            System.out.println("testIsHit ran " + testIsHit 
-                    + " times");
+            //System.out.println("testIsHit ran " + testIsHit 
+            //        + " times");
             System.out.println("testMakeBullet ran " + testMakeBullet 
                     + " times");
             

@@ -45,7 +45,7 @@ public class Spaceship implements Ship{
     }
     
     public Spaceship(int screenWidth, int screenHeight){
-        this.position = new Posn(screenWidth/2, screenHeight - 10);
+        this.position = new Posn(screenWidth/2, screenHeight - shipHeight / 2 + 5);
         this.red = 5;
         this.blue = 5;
         this.yellow = 5;
