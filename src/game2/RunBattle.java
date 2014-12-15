@@ -108,7 +108,7 @@ public class RunBattle extends World {
                 newEnemy = newEnemy.isHit(newBullet);
                 
                 //sets the bullet to one that is out of bounds or hit 
-                newBullets.set(j, newBullet.outOfBounds().isHit(newEnemy));
+                newBullets.set(j, newBullet.outOfBounds().isHitEnemy(newEnemy));
                 
             }
             
@@ -140,15 +140,20 @@ public class RunBattle extends World {
             
             newMyShip = newMyShip.isHit(newBullets.get(k));
             
+            Bullet anotherNewBullet = newBullets.get(k).isHitSpaceShip(newMyShip);
+            
             if (newMyShip.winCase == false) {
                 gameOver = true;
             } 
+            
+            newBullets.set(k, anotherNewBullet);
         }
         
+        /*
         //shoots a bullet every 4 frames from the ship 
         if (this.frames % 10 == 2) {
             newBullets.add(newMyShip.makeBullet());
-        }
+        }*/
         
         //adds an enemy every 8 frames 
         if (this.frames % 8 == 0 && newEnemiesIn < winNumber ) {

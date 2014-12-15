@@ -70,7 +70,7 @@ public class Bullet {
     
     //The bullet only has to stop if it hits an enemy, becuase once the player
     //is hit, the game is over 
-    public Bullet isHit(Enemy enemy){
+    public Bullet isHitEnemy(Enemy enemy){
         if (this.color == 4){
             if (this.position.x < enemy.position.x + enemy.shipWidth/2 &&
                 this.position.x > enemy.position.x - enemy.shipWidth/2 &&
@@ -85,6 +85,24 @@ public class Bullet {
             return this;
         }
     }
+    
+    public Bullet isHitSpaceShip(Spaceship spaceship){
+        if (this.color != 4){
+            if (this.position.x < spaceship.position.x + spaceship.shipWidth/2 &&
+                this.position.x > spaceship.position.x - spaceship.shipWidth/2 &&
+                this.position.y > spaceship.position.y - spaceship.shipHeight/2 &&
+                this.position.y < spaceship.position.y + spaceship.shipHeight/2){
+                    return new Bullet(this.position,this.color, this.screenWidth, 
+                            this.screenHeight, this.direction, false);
+            } else {
+                return this;
+            }
+        } else {
+            return this;
+        }
+    }
+    
+    
     
     public WorldImage bulletImage() {
         /*if (this.color == 1) {
@@ -114,7 +132,7 @@ public class Bullet {
     static int testScreenHeight = 600;
     static int checkOnTick;
     static int checkOutOfBounds;
-    static int checkBulletIsHit;
+    static int checkBulletIsHitEnemy;
     static Random rand = new Random();
     
     //returns a random int from start with a range of range 
@@ -204,7 +222,7 @@ public class Bullet {
     }
     
     
-    public static void checkBulletIsHit() throws Exception {
+    public static void checkBulletIsHitEnemy() throws Exception {
         for (int i = 0; i < 1000; i++){ 
             
             //creating a randomly placed spaceship
@@ -228,7 +246,7 @@ public class Bullet {
                 bullet = bullet.onTick();
                 en2 = en2.onTick();
                 
-                bullet = bullet.isHit(en2);
+                bullet = bullet.isHitEnemy(en2);
                 en2 = en2.isHit(bullet);
             }
             
@@ -244,18 +262,18 @@ public class Bullet {
                 }
             }
             
-            checkBulletIsHit++;
+            checkBulletIsHitEnemy++;
         }
     }
     
     public static void main(String[] args) throws Exception {
         checkOnTick();
         checkOutOfBounds();
-        checkBulletIsHit();
+        checkBulletIsHitEnemy();
         
         System.out.println("checkOnTick passed " + checkOnTick + " times");
         System.out.println("checkOutOfBounds passed " + checkOutOfBounds + " times");
-        System.out.println("checkBulletIsHit passed " + checkBulletIsHit + " times");
+        System.out.println("checkBulletIsHitEnemy passed " + checkBulletIsHitEnemy + " times");
         
     }
     
