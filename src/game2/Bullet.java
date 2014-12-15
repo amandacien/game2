@@ -28,7 +28,7 @@ public class Bullet {
     //        (4 white - bullet hitting the enemy)
     int color;
     
-    final int moveRate = 5;
+    final int moveRate = 10;
     
     final int bulletDiameter = 8;
     
@@ -102,8 +102,6 @@ public class Bullet {
         }
     }
     
-    
-    
     public WorldImage bulletImage() {
         /*if (this.color == 1) {
             return new FromFileImage(this.position, "redBullet.png");
@@ -128,8 +126,8 @@ public class Bullet {
     }
     
     //testing 
-    static int testScreenWidth = 300;
-    static int testScreenHeight = 600;
+    static int testScreenWidth = 400;
+    static int testScreenHeight = 500;
     static int checkOnTick;
     static int checkOutOfBounds;
     static int checkBulletIsHitEnemy;
@@ -238,7 +236,7 @@ public class Bullet {
             Enemy en2 = new Enemy(en1.screenWidth, en1.screenHeight, 
                     new Posn(enX, enY), en1.isHit, randInt(1,4));
             
-            Bullet bullet = sp1.makeBullet();
+            Bullet bullet = sp2.makeBullet();
             
             int randTick = randInt(0, (testScreenHeight - sp1.shipHeight)/bullet.moveRate);
             

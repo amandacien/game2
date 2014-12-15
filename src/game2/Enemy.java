@@ -121,8 +121,7 @@ public class Enemy implements Ship {
                 bullet.position.y > this.position.y - this.shipHeight/2 &&
                 bullet.position.y < this.position.y + this.shipHeight/2){
                     return new Enemy(this.screenWidth, this.screenHeight, 
-                            new Posn(this.position.x,this.position.y + this.shipHeight),
-                            true, this.moveCase);
+                            this.position, true, this.moveCase);
             } else {
                 return this;
             }
@@ -154,8 +153,8 @@ public class Enemy implements Ship {
     
     //Testing Code 
     
-    static int testScreenWidth = 300;
-    static int testScreenHeight = 600;
+    static int testScreenWidth = 400;
+    static int testScreenHeight = 500;
     static int testMovingCorrectly = 0;
     static int testIsHit = 0;
     static int testMakeBullet = 0;
@@ -225,7 +224,7 @@ public class Enemy implements Ship {
     
     
     private static void testIsHit() throws Exception {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             
             //creating a randomly placed spaceship
             Spaceship sp1 = new Spaceship(testScreenWidth, testScreenHeight);
@@ -242,7 +241,7 @@ public class Enemy implements Ship {
             
             //creating a bullet ticked to a random number of tick 
             int randTick = randInt(1, 150);
-            Bullet bullet = sp1.makeBullet();
+            Bullet bullet = sp2.makeBullet();
             
             for (int j = 0; j <= randTick; j++) { 
                 bullet = bullet.onTick();
@@ -267,6 +266,10 @@ public class Enemy implements Ship {
                 }
             } else {
                 if (!en3.equals(en2)) {
+                    System.out.println(en2.moveCase);
+                    System.out.println(en3.moveCase);
+                    System.out.println(en2.position.x + " " + en2.position.y);
+                    System.out.println(en3.position.x + " " + en3.position.y);
                     throw new Exception("The enemy was not hit and therefore " + 
                             "should stay the same");
                 }
@@ -280,7 +283,7 @@ public class Enemy implements Ship {
     
     private static void testMakeBullet() throws Exception{
         for (int i = 0; i < 1000; i++) {
-            Enemy en1 = new Enemy(testScreenWidth, 600);
+            Enemy en1 = new Enemy(testScreenWidth, testScreenHeight);
             int randPosX = randInt(en1.shipWidth/2, en1.screenWidth - en1.shipWidth);
             int randPosY = randInt(en1.shipHeight/2, en1.screenHeight - en1.shipHeight);
             Enemy en2 = new Enemy(en1.screenWidth, en1.screenHeight, 

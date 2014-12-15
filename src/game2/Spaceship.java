@@ -160,8 +160,8 @@ public class Spaceship implements Ship{
     }
     
     //Testing Code
-    static int testScreenWidth = 300;
-    static int testScreenHeight = 600;
+    static int testScreenWidth = 400;
+    static int testScreenHeight = 500;
     static int checkOnKey = 0;
     static int checkMoveShip = 0;
     static int testIsHit = 0;
