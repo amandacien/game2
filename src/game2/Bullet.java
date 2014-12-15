@@ -7,6 +7,8 @@
 package game2;
 import java.awt.Color;
 import java.util.*;
+import javalib.colors.IColor;
+import javalib.colors.Yellow;
 import javalib.worldimages.*;
 
 /**
@@ -14,6 +16,8 @@ import javalib.worldimages.*;
  * @author AmandaMa
  */
 public class Bullet {
+    
+    static IColor col = new Yellow();
     
     Posn position;
     
@@ -79,7 +83,18 @@ public class Bullet {
         }
     }
     
-    
+    public WorldImage bulletImage() {
+        /*if (this.color == 1) {
+            return new FromFileImage(this.position, "redBullet.png");
+        } else if (this.color == 2) {
+            return new FromFileImage(this.position, "blueBullet.png");
+        } else if (this.color == 3) {
+            return new FromFileImage(this.position, "yellowBullet.png");
+        } else {
+            return new FromFileImage(this.position, "whiteBullet.png");
+        }*/ 
+        return new DiskImage(this.position, this.bulletDiameter, this.col);
+    }
     
     //testing 
     static int testScreenWidth = 300;

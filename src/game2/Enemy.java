@@ -6,6 +6,8 @@
 
 package game2;
 import java.util.Random;
+import javalib.colors.IColor;
+import javalib.colors.Yellow;
 import javalib.worldimages.*;
 
 /**
@@ -17,8 +19,8 @@ public class Enemy implements Ship {
     Posn position;
     
     //Spaceship dimmensions 
-    final int shipHeight = 15;
-    final int shipWidth = 15;
+    final int shipHeight = 30;
+    final int shipWidth = 30;
     
     //the movement of your ship 
     final int moveShip = 10;
@@ -134,6 +136,20 @@ public class Enemy implements Ship {
                 randInt(1, 3), this.screenWidth, this.screenHeight, 1, true);
     }
     
+    public boolean gameOver(Spaceship spaceship){
+        if (this.position.y + this.shipHeight/2 
+                < spaceship.position.y - spaceship.shipHeight/2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    static IColor col = new Yellow();
+    public WorldImage enemyImage() {
+        //return new FromFileImage(this.position, "enemy.png");
+        return new RectangleImage(this.position, 
+                this.shipWidth , this.shipHeight, this.col);
+    }
     
     //Testing Code 
     
