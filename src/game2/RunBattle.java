@@ -107,10 +107,8 @@ public class RunBattle extends World {
                 //looks at if the enemy is not hit by any bullet 
                 newEnemy = newEnemy.isHit(newBullet);
                 
-                //looks at if the bullet is either off bounds or has hit an enemy
-                newBullet = newBullet.outOfBounds().isHit(newEnemy); 
-                
-                newBullets.set(j, newBullet);
+                //sets the bullet to one that is out of bounds or hit 
+                newBullets.set(j, newBullet.outOfBounds().isHit(newEnemy));
                 
             }
             
@@ -138,8 +136,8 @@ public class RunBattle extends World {
         
         
         //then looks at if the ship is being hit by bullets 
-        for (int k = 0; k < bullets.size(); k++) {
-            if (newMyShip.isHit(bullets.get(k)).winCase == false) {
+        for (int k = 0; k < newBullets.size(); k++) {
+            if (newMyShip.isHit(newBullets.get(k)).winCase == false) {
                 gameOver = true;
             } 
         }
