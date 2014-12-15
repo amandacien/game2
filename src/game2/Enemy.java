@@ -138,12 +138,13 @@ public class Enemy implements Ship {
     
     public boolean gameOver(Spaceship spaceship){
         if (this.position.y + this.shipHeight/2 
-                < spaceship.position.y - spaceship.shipHeight/2) {
+                > spaceship.position.y - spaceship.shipHeight/2) {
             return true;
         } else {
             return false;
         }
     }
+    
     static IColor col = new Yellow();
     public WorldImage enemyImage() {
         //return new FromFileImage(this.position, "enemy.png");

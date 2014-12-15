@@ -81,8 +81,7 @@ public class RunBattle extends World {
         if(gameOver){
             return new WorldEnd(true, new OverlayImages(this.makeImage(),
                 new TextImage(new Posn(screenWidth/2,screenHeight/2), 
-                        ("You couldn't save the world from the evil bunnies" + 
-                                "\nShame on you"),
+                        ("Game Over"),
                         20, new White())));
         } else {
             return new WorldEnd(false, this.makeImage());
@@ -111,9 +110,8 @@ public class RunBattle extends World {
                 //looks at if the bullet is either off bounds or has hit an enemy
                 newBullet = newBullet.outOfBounds().isHit(newEnemy); 
                 
-                if (!newBullet.onScreen) {
-                    enemies.remove(j);
-                }
+                newBullets.set(j, newBullet);
+                
             }
             
             //considering the information, it considers what to add to the array
@@ -125,9 +123,9 @@ public class RunBattle extends World {
                 newEnemies.add(newEnemy);
                 
                 //because it's being added to the array, the spaceship then
-                //has to consider if it attaks, the harder it is, the more often 
-                //it will shoot
-                if (randInt(0, 13 - (this.level)) == 0) {
+                //has to consider if it attaks, the harder the level is, the more  
+                //often it will shoot
+                if (randInt(0, 30 - (this.level)) == 0) {
                     newBullets.add(newEnemy.makeBullet());
                 }
                 
@@ -147,22 +145,40 @@ public class RunBattle extends World {
         }
         
         //shoots a bullet every 4 frames from the ship 
-        if (this.frames % 4 == 2) {
-            bullets.add(newMyShip.makeBullet());
+        if (this.frames % 10 == 2) {
+            newBullets.add(newMyShip.makeBullet());
         }
         
-        
         //adds an enemy every 8 frames 
-        if (this.frames % 8 == 0) {
+        if (this.frames % 8 == 0 && newEnemiesIn < winNumber ) {
             newEnemies.add(new Enemy(screenWidth, screenHeight));
             newEnemiesIn += 1;
         }
         
+        
+        ArrayList<Bullet> finalBullets = new ArrayList();
+        
+        for (int l = 0; l < newBullets.size(); l++) {
+            Bullet anotherBullet = newBullets.get(l).onTick();
+            
+            if (anotherBullet.onScreen) {
+                finalBullets.add(anotherBullet);
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        //if 20 enemies have entered and you have killed all 20, you go back to the maze 
         if (newEnemiesIn == winNumber && newEnemiesOut == winNumber) {
             return new RunMaze();
         } else {
+            //if not, the battle keeps going
             return new RunBattle (this.level, this.frames + 1, newEnemiesIn, newEnemiesOut,
-            newMyShip, newEnemies, newBullets, this.gameOver);
+            newMyShip, newEnemies, finalBullets, this.gameOver);
         }
                 
     }
