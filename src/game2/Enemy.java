@@ -17,11 +17,11 @@ public class Enemy implements Ship {
     Posn position;
     
     //Spaceship dimmensions 
-    final int shipHeight = 10;
-    final int shipWidth = 10;
+    final int shipHeight = 15;
+    final int shipWidth = 15;
     
     //the movement of your ship 
-    final int moveShip = 15;
+    final int moveShip = 10;
     
     //Screen Dimmensions
     int screenWidth;

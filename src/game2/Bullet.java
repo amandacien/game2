@@ -5,6 +5,7 @@
  */
 
 package game2;
+import java.awt.Color;
 import java.util.*;
 import javalib.worldimages.*;
 
@@ -22,7 +23,7 @@ public class Bullet {
     
     final int moveRate = 5;
     
-    final int bulletRadius = 4;
+    final int bulletDiameter = 8;
     
     int screenWidth;
     int screenHeight;
@@ -77,6 +78,8 @@ public class Bullet {
             return this;
         }
     }
+    
+    
     
     //testing 
     static int testScreenWidth = 300;
