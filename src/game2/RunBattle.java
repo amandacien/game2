@@ -102,13 +102,14 @@ public class RunBattle extends World {
             
             for (int j = 0; j < newBullets.size(); j++) {
                 //Considers the bullet in question to the enemy 
-                Bullet newBullet = newBullets.get(j);
+                Bullet newBullet = newBullets.get(j).outOfBounds().isHitEnemy(newEnemy);
                 
                 //looks at if the enemy is not hit by any bullet 
                 newEnemy = newEnemy.isHit(newBullet);
                 
+                
                 //sets the bullet to one that is out of bounds or hit 
-                newBullets.set(j, newBullet.outOfBounds().isHitEnemy(newEnemy));
+                newBullets.set(j, newBullet);
                 
             }
             
