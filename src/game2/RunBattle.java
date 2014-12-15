@@ -120,7 +120,7 @@ public class RunBattle extends World {
                 //if it's not hit then it's added to the array 
                 newEnemies.add(newEnemy);
                 
-                //because it's being added to the array, the spaceship then
+                //because it's being added to the array, the enemy then
                 //has to consider if it attaks, the harder the level is, the more  
                 //often it will shoot
                 if (randInt(0, 30 - (this.level)) == 0) {
@@ -137,7 +137,10 @@ public class RunBattle extends World {
         
         //then looks at if the ship is being hit by bullets 
         for (int k = 0; k < newBullets.size(); k++) {
-            if (newMyShip.isHit(newBullets.get(k)).winCase == false) {
+            
+            newMyShip = newMyShip.isHit(newBullets.get(k));
+            
+            if (newMyShip.winCase == false) {
                 gameOver = true;
             } 
         }
@@ -163,11 +166,6 @@ public class RunBattle extends World {
                 finalBullets.add(anotherBullet);
             }
         }
-        
-        
-        
-        
-        
         
         
         //if 20 enemies have entered and you have killed all 20, you go back to the maze 
@@ -209,11 +207,18 @@ public class RunBattle extends World {
             
     }
     
+    private WorldImage shieldImage(){
+        return new OverlayImages(new TextImage(new Posn(30, 15), 
+                            ("Blue: " + this.myShip.blue),10, new White()),
+                new OverlayImages(new TextImage(new Posn(30, 35), 
+                            ("Red: " + this.myShip.red),10, new White()),
+                        new TextImage(new Posn(30, 55), 
+                            ("Yellow: " + this.myShip.yellow),10, new White())));
+    }
     
     public WorldImage makeImage(){
        return new OverlayImages((enemyImage(enemies, enemies.size() - 1)),
-                /*new OverlayImages((bulletImage(bullets, bullets.size() - 1)), */
-                       myShip.spaceshipImage());
+               new OverlayImages(myShip.spaceshipImage(), shieldImage()));
     }
     
     public static void main(String[] args){

@@ -117,7 +117,7 @@ public class Spaceship implements Ship{
                                 this.yellow, false, this.screenWidth, this.screenHeight);
                 } else {
                     return new Spaceship(this.position, this.red - 1, this.blue, 
-                                this.yellow, true, this.screenWidth, this.screenHeight);
+                                this.yellow, this.winCase, this.screenWidth, this.screenHeight);
                 }
             } else {
                 return this;
@@ -129,7 +129,7 @@ public class Spaceship implements Ship{
                                 this.yellow, false, this.screenWidth, this.screenHeight);
                 } else {
                     return new Spaceship(this.position, this.red, this.blue - 1 , 
-                                this.yellow, true, this.screenWidth, this.screenHeight);
+                                this.yellow, this.winCase, this.screenWidth, this.screenHeight);
                 }
             } else {
                 return this;
@@ -141,7 +141,7 @@ public class Spaceship implements Ship{
                                 this.yellow, false, this.screenWidth, this.screenHeight);
                 } else {
                     return new Spaceship(this.position, this.red, this.blue, 
-                                this.yellow - 1, true, this.screenWidth, this.screenHeight);
+                                this.yellow - 1, this.winCase, this.screenWidth, this.screenHeight);
                 }
             } else {
                 return this;

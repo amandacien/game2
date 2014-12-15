@@ -7,7 +7,10 @@
 package game2;
 import java.awt.Color;
 import java.util.*;
+import javalib.colors.Blue;
 import javalib.colors.IColor;
+import javalib.colors.Red;
+import javalib.colors.White;
 import javalib.colors.Yellow;
 import javalib.worldimages.*;
 
@@ -93,7 +96,17 @@ public class Bullet {
         } else {
             return new FromFileImage(this.position, "whiteBullet.png");
         }*/ 
-        return new DiskImage(this.position, this.bulletDiameter, this.col);
+        if (this.color == 1) {
+            return new DiskImage(this.position, this.bulletDiameter, new Red());
+        } else if (this.color == 2) {
+            return new DiskImage(this.position, this.bulletDiameter, new Blue());
+        } else if (this.color == 3) {
+            return new DiskImage(this.position, this.bulletDiameter, new Yellow());
+        } else {
+            return new DiskImage(this.position, this.bulletDiameter, new White());
+        }
+        
+        
     }
     
     //testing 
