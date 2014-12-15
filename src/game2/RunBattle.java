@@ -149,11 +149,11 @@ public class RunBattle extends World {
             newBullets.set(k, anotherNewBullet);
         }
         
-        /*
+        
         //shoots a bullet every 4 frames from the ship 
         if (this.frames % 10 == 2) {
             newBullets.add(newMyShip.makeBullet());
-        }*/
+        }
         
         //adds an enemy every 8 frames 
         if (this.frames % 8 == 0 && newEnemiesIn < winNumber ) {
