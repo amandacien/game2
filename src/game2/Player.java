@@ -60,22 +60,22 @@ public class Player {
             return new Player(this.screenHeight, this.screenWidth,
                     new Posn(this.position.x, this.position.y - this.moveCase),
                     this.entered, 1, this.openedObject, this.level,
-                    this.red, this.blue, this.yellow);
+                    this.red, this.blue, this.yellow).leavingRoom();
         } else if (key.equals("left")) {
             return new Player(this.screenHeight, this.screenWidth,
                     new Posn(this.position.x - this.moveCase, this.position.y),
                     this.entered, 2, this.openedObject, this.level,
-                    this.red, this.blue, this.yellow);
+                    this.red, this.blue, this.yellow).leavingRoom();
         } else if (key.equals("down")) {
             return new Player(this.screenHeight, this.screenWidth,
                     new Posn(this.position.x, this.position.y + this.moveCase),
                     this.entered, 3, this.openedObject, this.level,
-                    this.red, this.blue, this.yellow);
+                    this.red, this.blue, this.yellow).leavingRoom();
         } else if (key.equals("right")) {
             return new Player(this.screenHeight, this.screenWidth,
                     new Posn(this.position.x + this.moveCase, this.position.y),
                     this.entered, 4, this.openedObject, this.level,
-                    this.red, this.blue, this.yellow);
+                    this.red, this.blue, this.yellow).leavingRoom();
         } else if (key.equals("Space")) {
             return new Player(this.screenHeight, this.screenWidth,
                     new Posn(this.position.x + this.moveCase, this.position.y),
@@ -86,7 +86,7 @@ public class Player {
         }
     }
     
-    public Player leavingRoom () {
+    public Player leavingRoom() {
         
         //Creating the players based on their edges that aren't allowed to move further 
         Player edge1 = new Player(this.screenHeight, this.screenWidth,
@@ -165,18 +165,16 @@ public class Player {
             } else {
                 return this;
             }
+        } else if (this.position.y - this.playerHeight/2 < 0) /*up, 1*/{
+            return edge1;
+        } else if (this.position.y + this.playerWidth/2 > this.screenWidth) /*down, 3*/ {
+            return edge3;
+        } else if (this.position.x - this.playerHeight/2 < 0) /*left, 4*/{ 
+            return edge4;
+        } else if (this.position.x + this.playerHeight/2 > this.screenHeight) /*right, 2*/ {
+            return edge2;
         } else {
-            if (this.position.y - this.playerHeight/2 < 0) /*up, 1*/{
-                return edge1;
-            } else if (this.position.y + this.playerWidth/2 > this.screenWidth) /*down, 3*/ {
-                return edge3;
-            } else if (this.position.x - this.playerHeight/2 < 0) /*left, 4*/{ 
-                return edge4;
-            } else if (this.position.x + this.playerHeight/2 > this.screenHeight) /*right, 2*/ {
-                return edge2;
-            } else {
-                return this;
-            }
+            return this;
         }
     }
 }
