@@ -44,11 +44,11 @@ public class Spaceship implements Ship{
         return rand.nextInt(range) + start ;
     }
     
-    public Spaceship(int screenWidth, int screenHeight){
+    public Spaceship(int screenWidth, int screenHeight, int red, int blue, int yellow){
         this.position = new Posn(screenWidth/2, screenHeight - shipHeight / 2 + 5);
-        this.red = 5;
-        this.blue = 5;
-        this.yellow = 5;
+        this.red = red;
+        this.blue = blue;
+        this.yellow = yellow;
         this.winCase = true; 
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -241,7 +241,7 @@ public class Spaceship implements Ship{
         for (int i = 0; i < 1000; i++) {
             
             //creating a randomly placed spaceship
-            Spaceship sp1 = new Spaceship(testScreenWidth, testScreenHeight);
+            Spaceship sp1 = new Spaceship(testScreenWidth, testScreenHeight, 5, 5, 5);
             int spX = randInt(sp1.shipWidth/2, sp1.screenWidth - sp1.shipWidth);
             Spaceship sp2 = new Spaceship(new Posn(spX, sp1.position.y), sp1.red, sp1.blue,
                     sp1.yellow, sp1.winCase, sp1.screenWidth, sp1.screenHeight);
@@ -321,7 +321,7 @@ public class Spaceship implements Ship{
     
     private static void testMakeBullet() throws Exception{
         for (int i = 0; i < 1000; i++) {
-            Spaceship sp1 = new Spaceship(testScreenWidth, testScreenHeight);
+            Spaceship sp1 = new Spaceship(testScreenWidth, testScreenHeight, 5, 5, 5);
             
             //only x position is random because the ship's y coordinates never change
             int randPosX = randInt(sp1.shipWidth/2, sp1.screenWidth - sp1.shipWidth);
@@ -342,7 +342,7 @@ public class Spaceship implements Ship{
     }
     
     public static void main(String[] args) throws Exception {
-        Spaceship t1 = new Spaceship(testScreenWidth, testScreenHeight);
+        Spaceship t1 = new Spaceship(testScreenWidth, testScreenHeight, 5, 5, 5);
         
         t1.checkOnKey();
         t1.checkMoveShip();

@@ -27,31 +27,28 @@ public class RunMaze extends World {
     
     int level;
     
-    
-    public RunMaze(int level, int red, int blue, int yellow, Player player) {
-        this.level = level;
-        this.player = player.setShields(red, blue, yellow);
-        this.mysteryObj = new MysteryObj();
+    public RunMaze(){
+        new RunMaze(1, 5, 5, 5 new Player(screenWidth, screenHeight));
     }
     
-    public RunMaze(MysteryObj mysteryObj, Player player, int level){
+    public RunMaze(int level, int red, int blue, int yellow, Player player) {
         super();
-        this.mysteryObj = mysteryObj;
+        this.level = level;
+        this.player = player.setShields(red, blue, yellow);
+    }
+    
+    public RunMaze(Player player, int level){
+        super();
         this.player = player;
         this.level = level;
     }
 
     public World onKey(String key){
-        return new RunMaze(this.mysteryObj.onKey(key), this.player.onKey(key), this.level);
+        return new RunMaze(this.player.onKey(key), this.level);
     }
     
     public World onTick(){
-        if(player.inBattle) {
-            return new RunBattle(this.level, this.player.red, this.player.blue, 
-                    this.player.yellow, this.player);
-        } else {
-            return new RunMaze(this.mysteryObj, this.player, this.level);
-        }
+        \
     }
     
 }
