@@ -6,6 +6,7 @@
 
 package game2;
 import java.util.*;
+import javalib.colors.Yellow;
 import javalib.worldimages.*;
 
 /**
@@ -19,7 +20,9 @@ public class Player {
     final int playerHeight = 50;
     final int moveCase = 5;
     final int doorSize = 100;
-       
+    
+    final static int myW = RunMaze.screenWidth;
+    
     int screenWidth;
     int screenHeight;
     
@@ -69,7 +72,7 @@ public class Player {
         this.blue = 5;
         this.yellow = 5;
         this.inBattle = false;
-        this.eventNum = 5;
+        this.eventNum = 6;
         
     }
     public Player(int screenWidth, int screenHeight, Posn position, int entered, 
@@ -185,7 +188,7 @@ public class Player {
         boolean leftRightLeave = (this.position.y < this.screenHeight/2 - this.doorSize/2 + this.playerHeight/2)
                 && (this.position.y > this.screenHeight/2 + this.doorSize/2 - this.playerHeight/2);
         
-        //if the opject is opened
+        //if the spacebar has been pressed 
         if (this.spacebar) {
             //if it's trying to leave above
             if (this.position.y - this.playerHeight/2 < 0) /*up, 1*/{
@@ -246,9 +249,9 @@ public class Player {
             return edge4;
         } else if (this.position.x + this.playerHeight/2 > this.screenHeight) /*right, 2*/ {
             return edge2;
-        } else {
-            return this;
-        }
+        } 
+        
+        return this;
     }
     
     
@@ -260,6 +263,11 @@ public class Player {
     
     public Player onTick(){
         return this;
+    }
+    
+    public WorldImage playerImage() {
+        return new RectangleImage(this.position, 
+                this.playerWidth , this.playerHeight, new Yellow());
     }
     
 }
