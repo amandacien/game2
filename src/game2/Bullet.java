@@ -28,7 +28,7 @@ public class Bullet {
     //        (4 white - bullet hitting the enemy)
     int color;
     
-    final int moveRate = 10;
+    final int moveRate = 15;
     
     final int bulletDiameter = 8;
     

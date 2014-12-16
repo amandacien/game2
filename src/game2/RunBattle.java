@@ -124,7 +124,7 @@ public class RunBattle extends World {
                 //because it's being added to the array, the enemy then
                 //has to consider if it attaks, the harder the level is, the more  
                 //often it will shoot
-                if (randInt(0, 20 - (this.level)) == 0) {
+                if (randInt(0, 29 - ((this.level) * 3)) == 0) {
                     newBullets.add(newEnemy.makeBullet());
                 }
                 
@@ -150,11 +150,11 @@ public class RunBattle extends World {
             newBullets.set(k, anotherNewBullet);
         }
         
-        /*
-        //shoots a bullet every 4 frames from the ship 
+        
+        //shoots a bullet every 10 frames from the ship 
         if (this.frames % 10 == 2) {
             newBullets.add(newMyShip.makeBullet());
-        }*/
+        }
         
         //adds an enemy every 8 frames 
         if (this.frames % 8 == 0 && newEnemiesIn < winNumber ) {
@@ -228,7 +228,7 @@ public class RunBattle extends World {
     }
     
     public static void main(String[] args){
-        RunBattle battle = new RunBattle(1);
+        RunBattle battle = new RunBattle(9);
         
         battle.bigBang(400, 500, 0.15);
     }

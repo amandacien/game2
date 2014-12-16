@@ -23,7 +23,7 @@ public class Enemy implements Ship {
     final int shipWidth = 30;
     
     //the movement of your ship 
-    final int moveShip = 10;
+    final int moveShip = 15;
     
     //Screen Dimmensions
     int screenWidth;
