@@ -33,31 +33,32 @@ public class RunBattle extends World {
     
     boolean gameOver;
     
-    Posn mazePosition;
-   
     static Random rand = new Random();
+    
+    Player player;
 
     private static int randInt(int start, int range) {
         return rand.nextInt(range) + start ;
     }
     
     //start of a ship battle
-    public RunBattle(int level, Posn mazePosition){
+    public RunBattle(int level, int red, int blue, int yellow, Player player){
         super();
         this.frames = 0;
         this.enemiesIn = 0;
         this.enemiesOut = 0;
-        this.myShip = new Spaceship(screenWidth, screenHeight);
+        this.myShip = new Spaceship(screenWidth, screenHeight, red, blue, yellow);
         this.enemies = new ArrayList();
         this.bullets = new ArrayList();
         this.gameOver = false;
-        this.mazePosition = mazePosition;
+        this.player = player;
+        
     }
     
     //duration of a shipbattle
     public RunBattle(int level, int frames, int enemiesIn, int enemiesOut,
             Spaceship myShip, ArrayList<Enemy> enemies, ArrayList<Bullet> bullets, 
-            boolean gameOver, Posn mazePosition){
+            boolean gameOver, Player player){
         super();
         this.level = level;
         this.frames = frames;
@@ -67,13 +68,13 @@ public class RunBattle extends World {
         this.enemies = enemies;
         this.bullets = bullets;
         this.gameOver = gameOver;
-        this.mazePosition = mazePosition;
+        this.player = player;
     }
     
     public RunBattle onKeyEvent(String key){
         if (key.equals("left") || (key.equals("right"))) {
             return new RunBattle(this.level, this.frames, this.enemiesIn, this.enemiesOut,
-            myShip.onKey(key), this.enemies, this.bullets, this.gameOver, this.mazePosition);
+            myShip.onKey(key), this.enemies, this.bullets, this.gameOver, this.player);
         } else { 
             return this;
         }
@@ -178,11 +179,12 @@ public class RunBattle extends World {
         
         //if 20 enemies have entered and you have killed all 20, you go back to the maze 
         if (newEnemiesIn == winNumber && newEnemiesOut == winNumber) {
-            return new RunMaze();
+            return new RunMaze(this.level + 1, newMyShip.red, newMyShip.blue, 
+                    newMyShip.yellow, this.player);
         } else {
             //if not, the battle keeps going
             return new RunBattle (this.level, this.frames + 1, newEnemiesIn, newEnemiesOut,
-            newMyShip, newEnemies, finalBullets, this.gameOver, this.mazePosition);
+            newMyShip, newEnemies, finalBullets, this.gameOver, this.player);
         }
                 
     }

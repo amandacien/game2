@@ -26,6 +26,8 @@ public class Player {
     // 4 = right 
     int entered; 
     
+    
+    
     //tells if the object is open or not - allows you to leave the room 
     boolean openedObject;
     
@@ -44,15 +46,24 @@ public class Player {
     final int moveCase = 5;
     final int doorSize = 100;
     
+    boolean inBattle;
+    
+    
     
     public Player(int screenHeight, int screenWidth, Posn position, int entered, 
-            int direction, boolean openedObject, int level, int red, int blue, int yellow){
+            int direction, boolean openedObject, int level, int red, int blue, 
+            int yellow, boolean inBattle){
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
         this.position = position;
         this.entered = entered; 
         this.direction = direction;
         this.openedObject = openedObject;
+        this.level = level;
+        this.red = red;
+        this.blue = blue;
+        this.yellow = yellow;
+        this.inBattle = inBattle;
     }
     
     public Player onKey(String key){
@@ -60,27 +71,48 @@ public class Player {
             return new Player(this.screenHeight, this.screenWidth,
                     new Posn(this.position.x, this.position.y - this.moveCase),
                     this.entered, 1, this.openedObject, this.level,
-                    this.red, this.blue, this.yellow).leavingRoom();
+                    this.red, this.blue, this.yellow, this.inBattle).leavingRoom();
         } else if (key.equals("left")) {
             return new Player(this.screenHeight, this.screenWidth,
                     new Posn(this.position.x - this.moveCase, this.position.y),
                     this.entered, 2, this.openedObject, this.level,
-                    this.red, this.blue, this.yellow).leavingRoom();
+                    this.red, this.blue, this.yellow, this.inBattle).leavingRoom();
         } else if (key.equals("down")) {
             return new Player(this.screenHeight, this.screenWidth,
                     new Posn(this.position.x, this.position.y + this.moveCase),
                     this.entered, 3, this.openedObject, this.level,
-                    this.red, this.blue, this.yellow).leavingRoom();
+                    this.red, this.blue, this.yellow, this.inBattle).leavingRoom();
         } else if (key.equals("right")) {
             return new Player(this.screenHeight, this.screenWidth,
                     new Posn(this.position.x + this.moveCase, this.position.y),
                     this.entered, 4, this.openedObject, this.level,
-                    this.red, this.blue, this.yellow).leavingRoom();
+                    this.red, this.blue, this.yellow, this.inBattle).leavingRoom();
         } else if (key.equals("Space")) {
-            return new Player(this.screenHeight, this.screenWidth,
-                    new Posn(this.position.x + this.moveCase, this.position.y),
+            return new Player(this.screenHeight, this.screenWidth,this.position,
                     this.entered, this.direction, true, this.level,
-                    this.red, this.blue, this.yellow);
+                    this.red, this.blue, this.yellow, this.inBattle);
+        } else {
+            return this;
+        }
+    }
+    
+    public Player eventConsequences(MysteryObj mysteryObj){
+        if (mysteryObj.event == 0){
+            return new Player(this.screenHeight, this.screenWidth, this.position,
+                    this.entered, this.direction, this.openedObject, this.level,
+                    this.red, this.blue, this.yellow, true);
+        } else if (mysteryObj.event == 1) {
+            return new Player(this.screenHeight, this.screenWidth, this.position,
+                    this.entered, this.direction, this.openedObject, this.level,
+                    5, this.blue, this.yellow, this.inBattle);
+        } else if (mysteryObj.event == 2) {
+            return new Player(this.screenHeight, this.screenWidth, this.position,
+                    this.entered, this.direction, this.openedObject, this.level,
+                    this.red, 5, this.yellow, this.inBattle);
+        } else if (mysteryObj.event == 3) {
+            return new Player(this.screenHeight, this.screenWidth, this.position,
+                    this.entered, this.direction, this.openedObject, this.level,
+                    this.red, this.blue, 5, this.inBattle);
         } else {
             return this;
         }
@@ -92,22 +124,22 @@ public class Player {
         Player edge1 = new Player(this.screenHeight, this.screenWidth,
                         new Posn(this.position.x, 0 + this.playerHeight/2),
                         this.entered, this.direction, this.openedObject, this.level,
-                        this.red, this.blue, this.yellow);
+                        this.red, this.blue, this.yellow, this.inBattle);
         
         Player edge3 = new Player(this.screenHeight, this.screenWidth,
                         new Posn(this.position.x, this.screenHeight - this.playerHeight/2),
                         this.entered, this.direction, this.openedObject, this.level, 
-                        this.red, this.blue, this.yellow);
+                        this.red, this.blue, this.yellow, this.inBattle);
         
         Player edge4 = new Player(this.screenHeight, this.screenWidth,
                         new Posn(0 + this.playerWidth/2, this.position.y),
                         this.entered, this.direction, this.openedObject, this.level, 
-                        this.red, this.blue, this.yellow);
+                        this.red, this.blue, this.yellow, this.inBattle);
         
         Player edge2 = new Player(this.screenHeight, this.screenWidth,
                         new Posn(this.screenWidth - this.playerWidth/2, this.position.y),
                         this.entered, this.direction, this.openedObject, this.level, 
-                        this.red, this.blue, this.yellow);
+                        this.red, this.blue, this.yellow, this.inBattle);
         
         //creating the booleans telling whether they're in the range of a door 
         boolean topBottomLeave = (this.position.x < this.screenWidth/2 + this.doorSize/2 - this.playerWidth/2) 
@@ -126,8 +158,9 @@ public class Player {
                 } else if (topBottomLeave) {
                     //if the player is leaving through a door, returns a new player in a new "room"
                     return new Player(this.screenHeight, this.screenWidth,
-                        new Posn(this.position.x, this.screenHeight - this.playerHeight/2),
-                        3, this.direction, false, this.level, this.red, this.blue, this.yellow);
+                            new Posn(this.position.x, this.screenHeight - this.playerHeight/2),
+                            3, this.direction, false, this.level, this.red, this.blue, 
+                            this.yellow, this.inBattle);
                 } else {
                     //if it's not leaving through the door, it stays put aginst the edge 
                     return edge1;
@@ -137,8 +170,9 @@ public class Player {
                     return edge3;
                 } else if (topBottomLeave) {
                     new Player(this.screenHeight, this.screenWidth,
-                        new Posn(this.position.x, 0 + this.playerHeight/2),
-                        1, this.direction, false, this.level, this.red, this.blue, this.yellow);
+                            new Posn(this.position.x, 0 + this.playerHeight/2),
+                            1, this.direction, false, this.level, this.red, this.blue, 
+                            this.yellow, this.inBattle);
                 } else {
                     return edge3;
                 }
@@ -147,8 +181,9 @@ public class Player {
                     return edge4;
                 } else if (leftRightLeave) {
                     new Player(this.screenHeight, this.screenWidth,
-                        new Posn(this.screenWidth - this.playerWidth/2, this.position.y),
-                        2, this.direction, false, this.level, this.red, this.blue, this.yellow);
+                            new Posn(this.screenWidth - this.playerWidth/2, this.position.y),
+                            2, this.direction, false, this.level, this.red, this.blue, 
+                            this.yellow, this.inBattle);
                 } else {
                     return edge4;
                 }
@@ -157,8 +192,9 @@ public class Player {
                     return edge2;
                 } else if (leftRightLeave) {
                     new Player(this.screenHeight, this.screenWidth,
-                        new Posn(0 + this.playerWidth/2, this.position.y),
-                        2, this.direction, false, this.level, this.red, this.blue, this.yellow);
+                            new Posn(0 + this.playerWidth/2, this.position.y),
+                            2, this.direction, false, this.level, this.red, this.blue, 
+                            this.yellow, this.inBattle);
                 } else {
                     return edge2;
                 }
@@ -177,6 +213,8 @@ public class Player {
             return this;
         }
     }
+    
+    
 }
 
 

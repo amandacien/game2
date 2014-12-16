@@ -222,7 +222,7 @@ public class Bullet {
         for (int i = 0; i < 1000; i++){ 
             
             //creating a randomly placed spaceship
-            Spaceship sp1 = new Spaceship(testScreenWidth, testScreenHeight);
+            Spaceship sp1 = new Spaceship(testScreenWidth, testScreenHeight, 5, 5, 5);
             int spX = randInt(sp1.shipWidth/2, sp1.screenWidth - sp1.shipWidth);
             Spaceship sp2 = new Spaceship(new Posn(spX, sp1.position.y), sp1.red, sp1.blue,
                     sp1.yellow, sp1.winCase, sp1.screenWidth, sp1.screenHeight);
