@@ -23,6 +23,10 @@ public class RunMaze extends World {
         super();
     }
 
+    
+    
+    
+    
     @Override
     public WorldImage makeImage() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

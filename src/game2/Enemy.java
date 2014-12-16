@@ -144,12 +144,12 @@ public class Enemy implements Ship {
         }
     }
     
-    static IColor col = new Yellow();
     public WorldImage enemyImage() {
         //return new FromFileImage(this.position, "enemy.png");
         return new RectangleImage(this.position, 
-                this.shipWidth , this.shipHeight, this.col);
+                this.shipWidth , this.shipHeight, new Yellow());
     }
+    
     
     //Testing Code 
     
@@ -274,9 +274,6 @@ public class Enemy implements Ship {
                             "should stay the same");
                 }
             }
-            
-            
-            
             testIsHit++;
         }
     }

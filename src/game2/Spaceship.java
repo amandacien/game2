@@ -151,12 +151,10 @@ public class Spaceship implements Ship{
         }
     } 
     
-    static IColor col = new Yellow(); 
-    
     public WorldImage spaceshipImage() {
         //return new FromFileImage(this.position, "spaceship.png");
         return new RectangleImage(this.position, 
-                this.shipWidth , this.shipHeight, this.col);
+                this.shipWidth , this.shipHeight, new Yellow());
     }
     
     //Testing Code

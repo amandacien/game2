@@ -33,8 +33,8 @@ public class RunBattle extends World {
     
     boolean gameOver;
     
-    
-    
+    Posn mazePosition;
+   
     static Random rand = new Random();
 
     private static int randInt(int start, int range) {
@@ -42,7 +42,7 @@ public class RunBattle extends World {
     }
     
     //start of a ship battle
-    public RunBattle(int level){
+    public RunBattle(int level, Posn mazePosition){
         super();
         this.frames = 0;
         this.enemiesIn = 0;
@@ -51,12 +51,13 @@ public class RunBattle extends World {
         this.enemies = new ArrayList();
         this.bullets = new ArrayList();
         this.gameOver = false;
+        this.mazePosition = mazePosition;
     }
     
     //duration of a shipbattle
     public RunBattle(int level, int frames, int enemiesIn, int enemiesOut,
             Spaceship myShip, ArrayList<Enemy> enemies, ArrayList<Bullet> bullets, 
-            boolean gameOver){
+            boolean gameOver, Posn mazePosition){
         super();
         this.level = level;
         this.frames = frames;
@@ -66,12 +67,13 @@ public class RunBattle extends World {
         this.enemies = enemies;
         this.bullets = bullets;
         this.gameOver = gameOver;
+        this.mazePosition = mazePosition;
     }
     
     public RunBattle onKeyEvent(String key){
         if (key.equals("left") || (key.equals("right"))) {
             return new RunBattle(this.level, this.frames, this.enemiesIn, this.enemiesOut,
-            myShip.onKey(key), this.enemies, this.bullets, this.gameOver);
+            myShip.onKey(key), this.enemies, this.bullets, this.gameOver, this.mazePosition);
         } else { 
             return this;
         }
@@ -180,7 +182,7 @@ public class RunBattle extends World {
         } else {
             //if not, the battle keeps going
             return new RunBattle (this.level, this.frames + 1, newEnemiesIn, newEnemiesOut,
-            newMyShip, newEnemies, finalBullets, this.gameOver);
+            newMyShip, newEnemies, finalBullets, this.gameOver, this.mazePosition);
         }
                 
     }
@@ -227,9 +229,5 @@ public class RunBattle extends World {
                new OverlayImages(myShip.spaceshipImage(), shieldImage()));
     }
     
-    public static void main(String[] args){
-        RunBattle battle = new RunBattle(9);
-        
-        battle.bigBang(400, 500, 0.15);
-    }
+    
 }

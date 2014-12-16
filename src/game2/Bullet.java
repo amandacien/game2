@@ -20,8 +20,6 @@ import javalib.worldimages.*;
  */
 public class Bullet {
     
-    static IColor col = new Yellow();
-    
     Posn position;
     
     //Colors, (1 red) (2 blue) (3 yellow)
