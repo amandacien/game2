@@ -145,9 +145,8 @@ public class Enemy implements Ship {
     }
     
     public WorldImage enemyImage() {
-        //return new FromFileImage(this.position, "enemy.png");
-        return new RectangleImage(this.position, 
-                this.shipWidth , this.shipHeight, new Yellow());
+        return new FromFileImage(this.position, "enemy.png");
+        
     }
     
     

@@ -232,4 +232,10 @@ public class RunBattle extends World {
     }
     
     
+    public static void main (String[] args) {
+        RunBattle game = new RunBattle(1, 5 ,5, 5, new Player(400, 500));
+        
+        game.bigBang(400, 500, 0.15);
+    }
+    
 }

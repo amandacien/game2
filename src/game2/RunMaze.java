@@ -64,7 +64,7 @@ public class RunMaze extends World {
             return new RunBattle(this.level, this.player.red, this.player.blue, 
                     this.player.yellow, this.player);
         } else {
-            return new RunMaze(this.player.onTick(), this.level);
+            return new RunMaze(this.player, this.level);
         }
     }
     
@@ -84,7 +84,7 @@ public class RunMaze extends World {
         } else if (this.player.eventNum == 3) {
             eventCase = "Replenished Blue Shield!";
         } else if (this.player.eventNum == 4) {
-            eventCase = "Luck or not, you get nothing from this room";
+            eventCase = "Lucky or not, you get nothing from this room";
         } else if (this.player.eventNum == 5) {
             eventCase = "You've hit the spacebar already, leave!";
         } else {

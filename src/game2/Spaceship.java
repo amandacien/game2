@@ -31,7 +31,7 @@ public class Spaceship implements Ship{
     final int shipWidth = 30;
     
     //the movement of your ship 
-    final int moveShip = 5;
+    final int moveShip = 7;
     
     //Screen Dimmensions
     int screenWidth;
@@ -152,9 +152,8 @@ public class Spaceship implements Ship{
     } 
     
     public WorldImage spaceshipImage() {
-        //return new FromFileImage(this.position, "spaceship.png");
-        return new RectangleImage(this.position, 
-                this.shipWidth , this.shipHeight, new Yellow());
+        return new FromFileImage(this.position, "spaceship.png");
+        
     }
     
     //Testing Code
